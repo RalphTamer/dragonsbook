@@ -3,6 +3,12 @@ import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import Layout from "./_components/Layout";
+import { getServerSession } from "next-auth";
+import { authOptions } from "~/server/auth";
+import SessionProviderWrapper from "./_components/SessionProviderWrapper";
+import { api } from "~/trpc/server";
+import { RedirectType, redirect } from "next/navigation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,15 +21,21 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <SessionProviderWrapper>
+            <Layout session={session}>{children}</Layout>
+          </SessionProviderWrapper>
+        </TRPCReactProvider>
       </body>
     </html>
   );

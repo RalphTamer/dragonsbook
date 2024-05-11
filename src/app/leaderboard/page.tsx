@@ -1,11 +1,15 @@
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { authOptions } from "~/server/auth";
+import { redirect } from "next/navigation";
+import Leaderboard from "../_components/Leaderboard";
 
-export default async function Home() {
+const LeaderboardPage = async () => {
   const session = await getServerSession(authOptions);
   if (session?.user == null) {
     redirect("/auth/login");
   }
-  return <div>{}</div>;
-}
+
+  return <Leaderboard />;
+};
+
+export default LeaderboardPage;

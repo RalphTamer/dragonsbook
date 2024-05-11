@@ -14,18 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -53,15 +41,48 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Event {
+    id             String           @id @default(cuid())
+    type           String
+    name           String
+    qr             String
+    UserAttendance UserAttendance[]
+}
+
+// model Post {
+//     id        Int      @id @default(autoincrement())
+//     name      String
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+
+//     createdBy   User   @relation(fields: [createdById], references: [id])
+//     createdById String
+
+//     @@index([name])
+// }
+model UserAttendance {
+    id            String @id @default(cuid())
+    userId        String
+    attendedUser  User   @relation(fields: [userId], references: [id])
+    eventId       String
+    attendedEvent Event  @relation(fields: [eventId], references: [id])
+}
+
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+    id             String           @id @default(cuid())
+    username       String           @unique
+    email          String           @unique
+    role           String
+    password       String
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    title          String
+    earthPoints    Int
+    airPoints      Int
+    waterPoints    Int
+    firePoints     Int
+    UserAttendance UserAttendance[]
 }
 
 model VerificationToken {

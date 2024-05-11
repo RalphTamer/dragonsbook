@@ -5,10 +5,11 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
-import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
+import { comparePasswordToHash } from "./services/auth.service";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -38,19 +39,77 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    jwt: async ({ token, user }) => {
+      if (user != null) {
+        return {
+          ...token,
+          username: user.username,
+          role: user.role,
+        };
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          username: token.username,
+          role: token.role,
+        },
+      };
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
   },
   adapter: PrismaAdapter(db) as Adapter,
+  pages: {
+    signIn: "/auth/login",
+  },
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "enter email",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+        },
+      },
+      async authorize(credentials) {
+        if (credentials?.email == null || credentials.password == null) {
+          return null;
+        }
+        const existingUser = await db.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+        if (existingUser == null) {
+          return null;
+        }
+        const passwordIsMatched = await comparePasswordToHash({
+          plaintextPassword: credentials.password,
+          hash: existingUser.password,
+        });
+        if (passwordIsMatched.isEqual === false) {
+          return null;
+        }
+        console.log("login approved");
+
+        return {
+          id: existingUser.id,
+          username: existingUser.username,
+          email: existingUser.email,
+          role: existingUser.role,
+        };
+      },
     }),
     /**
      * ...add more providers here.

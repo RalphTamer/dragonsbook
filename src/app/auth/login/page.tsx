@@ -1,11 +1,14 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import LoginForm from "~/app/_components/LoginForm";
 import { authOptions } from "~/server/auth";
 
-export default async function Home() {
+const Login = async () => {
   const session = await getServerSession(authOptions);
-  if (session?.user == null) {
-    redirect("/auth/login");
+  if (session != null) {
+    redirect("/");
   }
-  return <div>{}</div>;
-}
+  return <LoginForm />;
+};
+
+export default Login;
