@@ -45,7 +45,9 @@ model Event {
     id             String           @id @default(cuid())
     type           String
     name           String
-    qr             String
+    qr             String?
+    pointsAdded    Int
+    createdAt      DateTime         @default(now())
     UserAttendance UserAttendance[]
 }
 
@@ -61,28 +63,38 @@ model Event {
 //     @@index([name])
 // }
 model UserAttendance {
-    id            String @id @default(cuid())
+    id            String   @id @default(cuid())
     userId        String
-    attendedUser  User   @relation(fields: [userId], references: [id])
+    attendedUser  User     @relation(fields: [userId], references: [id])
     eventId       String
-    attendedEvent Event  @relation(fields: [eventId], references: [id])
+    attendedEvent Event    @relation(fields: [eventId], references: [id])
+    createdAt     DateTime @default(now())
 }
 
 model User {
-    id             String           @id @default(cuid())
-    username       String           @unique
-    email          String           @unique
-    role           String
-    password       String
-    image          String?
-    accounts       Account[]
-    sessions       Session[]
-    title          String
-    earthPoints    Int
-    airPoints      Int
-    waterPoints    Int
-    firePoints     Int
-    UserAttendance UserAttendance[]
+    id                       String                     @id @default(cuid())
+    username                 String                     @unique
+    email                    String                     @unique
+    role                     String
+    password                 String
+    image                    String?
+    fullname                 String
+    dateOfBirth              DateTime
+    phoneNumber              String
+    instagramHandle          String?
+    address                  String?
+    accounts                 Account[]
+    sessions                 Session[]
+    title                    String
+    earthPoints              Int                        @default(0)
+    airPoints                Int                        @default(0)
+    waterPoints              Int                        @default(0)
+    firePoints               Int                        @default(0)
+    totalPoints              Int                        @default(0)
+    UserAttendance           UserAttendance[]
+    // @@index([totalPoints , id])
+    UserAcquiredSpecialBadge UserAcquiredSpecialBadge[]
+    createdAt                DateTime                   @default(now())
 }
 
 model VerificationToken {
@@ -91,4 +103,39 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model UserPasswordReset {
+    email     String   @id
+    token     String
+    createdAt DateTime @default(now())
+}
+
+model SpecialBadge {
+    id                      String                     @id @default(cuid())
+    title                   String
+    content                 String
+    image                   String
+    year                    Int
+    UserAquiredSpecialBadge UserAcquiredSpecialBadge[]
+    createdAt               DateTime                   @default(now())
+}
+
+model UserAcquiredSpecialBadge {
+    id           String       @id @default(cuid())
+    userId       String
+    attendedUser User         @relation(fields: [userId], references: [id])
+    badgeId      String
+    specialBadge SpecialBadge @relation(fields: [badgeId], references: [id])
+    createdAt    DateTime     @default(now())
+}
+
+model Popup {
+    id        String   @id @default(cuid())
+    day       Int
+    month     String
+    title     String
+    content   String
+    link      String
+    createdAt DateTime @default(now())
 }

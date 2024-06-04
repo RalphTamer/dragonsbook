@@ -1,5 +1,4 @@
 "use client";
-import _ from "lodash";
 import type { CSSProperties } from "react";
 import React, { useState, useRef, useEffect } from "react";
 import SVGIcon from "./SVGIcon";

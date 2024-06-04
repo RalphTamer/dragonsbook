@@ -12,4 +12,19 @@
        padding-left: 20px;
     }
  }
+
+ body {
+   background-color: #e8e8e8;
+ }
+ input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
  
+  filter: invert(1);
+}

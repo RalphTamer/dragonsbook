@@ -7,7 +7,6 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { env } from "~/env";
 import { db } from "~/server/db";
 import { comparePasswordToHash } from "./services/auth.service";
 
@@ -45,6 +44,7 @@ export const authOptions: NextAuthOptions = {
           ...token,
           username: user.username,
           role: user.role,
+          id: user.id,
         };
       }
       return token;
@@ -56,6 +56,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           username: token.username,
           role: token.role,
+          id: token.id,
         },
       };
     },
@@ -101,7 +102,6 @@ export const authOptions: NextAuthOptions = {
         if (passwordIsMatched.isEqual === false) {
           return null;
         }
-        console.log("login approved");
 
         return {
           id: existingUser.id,

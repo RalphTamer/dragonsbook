@@ -1,6 +1,6 @@
 "use client";
 import NextLink from "next/link";
-import React, { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { navStore } from "~/lib/store";
 
 type Props = {

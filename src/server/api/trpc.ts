@@ -10,6 +10,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { NewSession } from "~/lib/types";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
@@ -97,6 +98,19 @@ export const publicProcedure = t.procedure;
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+export const AdminProtectedProcedure = t.procedure.use(({ ctx, next }) => {
+  const session = ctx.session as NewSession;
+  if (!ctx.session || !ctx.session.user || session?.user.role != "ADMIN") {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({

@@ -1,34 +1,58 @@
 "use client";
-import { Session } from "next-auth";
 import SVGIcon from "./UI/SVGIcon";
-import SlideoutMenu from "./UI/SlideoutNav";
 import { navStore } from "~/lib/store";
-import CollapsibleItem from "./UI/CollapsibleItem";
-import { signOut } from "next-auth/react";
 import Link from "./UI/Link";
-
-// {session?.user != null ? (
-//     <div onClick={() => signOut()}>log out</div>
-//   ) : (
-//     <Link href={"/auth/login"}>log in</Link>
-//   )}
+import NavSliderMenu from "./NavSliderMenu";
+import { usePathname } from "next/navigation";
+import { humanizePaths } from "~/lib/utils";
+import type { NextFont } from "next/dist/compiled/@next/font";
+import { style } from "~/lib/styles";
+import { NavbarPopup } from "./NavbarPopup";
+import { Popup } from "@prisma/client";
 type Props = {
-  session: Session | null;
+  id: string;
+  edgeOfTheGalaxy: NextFont;
+  popupData: Popup | null;
 };
 const Navbar = (props: Props) => {
-  console.log("render");
+  const pathname = usePathname();
   return (
     <>
+      {props.popupData != null && pathname.startsWith("/admin") === false && (
+        <NavbarPopup
+          link={props.popupData.link}
+          day={props.popupData.day}
+          month={props.popupData.month}
+          title={props.popupData.title}
+          content={props.popupData.content}
+          visible={props.popupData != null}
+        />
+      )}
       <div className="container ">
         <div
-          className="mt-4 flex justify-between py-6"
+          className="mt-4 flex justify-between pb-3 pt-6"
           style={{
             // backgroundColor: "green",
             borderTop: "1px solid #ccc",
             borderBottom: "1px solid #ccc",
           }}
         >
-          <Link href={"/"}>LOGO</Link>
+          <div className="flex items-center gap-2">
+            <Link href={"/"}>
+              <img src="/icons/logo.png" className="pb-3" />
+            </Link>
+            <div
+              className={`${props.edgeOfTheGalaxy.className}`}
+              style={{
+                letterSpacing: 1,
+                fontSize: 28,
+                lineHeight: 0.9,
+                fontWeight: 200,
+              }}
+            >
+              {humanizePaths(pathname)}
+            </div>
+          </div>
           <div
             onClick={() => {
               navStore.setState({
@@ -40,24 +64,10 @@ const Navbar = (props: Props) => {
           </div>
         </div>
       </div>
-      <SlideoutMenu
-        renderElem={
-          <>
-            <div
-              onClick={() => {
-                signOut();
-              }}
-            >
-              log out
-            </div>
-            <Link href={"/leaderboard"}>leaderboard</Link>
-            <CollapsibleItem
-              id="ads"
-              title={<div>test</div>}
-              renderBody={() => <div>content</div>}
-            />
-          </>
-        }
+      <NavSliderMenu
+        pathname={pathname}
+        id={props.id}
+        edgeOfTheGalaxy={props.edgeOfTheGalaxy}
       />
     </>
   );

@@ -1,14 +1,21 @@
 "use client";
-import { Fragment, ReactNode, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
+import type { ReactNode } from "react";
 import SVGIcon from "./SVGIcon";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  height?: string;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const BottomSlideModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+  height,
+}) => {
   useEffect(() => {
     const elem = document.getElementById("bottomSheet");
     if (elem == null) {
@@ -52,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           bottom: 0,
           //   top: 0,
           right: 0,
-          height: "fit-content",
+          height: height != null ? height : "fit-content",
           width: "100vw",
           maxWidth: 500,
           overflowY: "auto",
@@ -86,4 +93,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default Modal;
+export default BottomSlideModal;

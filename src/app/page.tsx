@@ -1,11 +1,15 @@
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "~/server/auth";
+import { NewSession } from "~/lib/types";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerAuthSession()) as unknown as NewSession;
+
   if (session?.user == null) {
     redirect("/auth/login");
+  } else if (session.user.role === "ADMIN") {
+    redirect("/admin");
+  } else {
+    redirect(`/dragon-book/${session.user.id}`);
   }
-  return <div>{}</div>;
 }
