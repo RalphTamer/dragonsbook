@@ -120,27 +120,32 @@ export default function ImageCropper(props: Props) {
   }
 
   useDebounceEffect(
-    async () => {
-      if (
-        completedCrop?.width &&
-        completedCrop?.height &&
-        imgRef.current &&
-        previewCanvasRef.current
-      ) {
-        // We use canvasPreview as it's much faster than imgPreview.
-        await canvasPreview(
-          imgRef.current,
-          previewCanvasRef.current,
-          completedCrop,
-          scale,
-          rotate,
-        );
-      }
+    () => {
+      // Synchronous function to handle asynchronous logic
+      const handleAsync = async () => {
+        if (
+          completedCrop?.width &&
+          completedCrop?.height &&
+          imgRef.current &&
+          previewCanvasRef.current
+        ) {
+          // We use canvasPreview as it's much faster than imgPreview.
+          await canvasPreview(
+            imgRef.current,
+            previewCanvasRef.current,
+            completedCrop,
+            scale,
+            rotate,
+          );
+        }
+      };
+
+      // Call the asynchronous function
+      handleAsync();
     },
     100,
     [completedCrop, scale, rotate],
   );
-
   return (
     <div className="App space-y-2">
       <div className="Crop-Controls">

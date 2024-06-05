@@ -29,9 +29,7 @@ export const UploadButton = generateUploadButton<OurFileRouter>();
 export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
 
 export const { useUploadThing, uploadFiles } =
-  generateReactHelpers<OurFileRouter>({
-    url: `${process.env.BASE_URL}/api/uploadthing`,
-  });
+  generateReactHelpers<OurFileRouter>();
 
 export const compressImage = async (
   file: File,
