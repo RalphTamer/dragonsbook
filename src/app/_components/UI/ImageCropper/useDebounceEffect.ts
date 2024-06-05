@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
 export function useDebounceEffect(
-  fn: () => void | Promise<void>,
+  fn: () => void,
   waitTime: number,
   deps: unknown[] = [],
 ) {
   useEffect(() => {
-    const handleEffect = async () => {
+    const handleEffect = () => {
       try {
-        await fn();
+        fn();
       } catch (error) {
         // Handle errors here if necessary
         console.error("Error occurred:", error);
