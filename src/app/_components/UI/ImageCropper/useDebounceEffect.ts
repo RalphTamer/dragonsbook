@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 
 export function useDebounceEffect(
-  fn: () => void,
+  fn: () => void | Promise<void>,
   waitTime: number,
   deps: unknown[] = [],
 ) {
   useEffect(() => {
-    const t = setTimeout(() => {
-      fn();
-    }, waitTime);
+    const handleEffect = async () => {
+      try {
+        await fn();
+      } catch (error) {
+        // Handle errors here if necessary
+        console.error("Error occurred:", error);
+      }
+    };
+
+    const timeoutId = setTimeout(handleEffect, waitTime);
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(timeoutId);
     };
   }, deps);
 }
