@@ -1,6 +1,10 @@
 import { z } from "zod";
 import QRCode from "qrcode";
-import { AdminProtectedProcedure, createTRPCRouter } from "~/server/api/trpc";
+import {
+  AdminProtectedProcedure,
+  createTRPCRouter,
+  protectedProcedure,
+} from "~/server/api/trpc";
 import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi();
@@ -491,5 +495,42 @@ export const adminRouter = createTRPCRouter({
         message: "Badge Given to user failed",
       };
     }
+  }),
+  makeMeAdmin: protectedProcedure.query(async ({ ctx }) => {
+    const findUser = await ctx.db.user.findFirst({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        id: true,
+        email: true,
+      },
+    });
+    if (findUser == null)
+      return {
+        success: false,
+        message: "User does not exist",
+      };
+    if (
+      findUser.email === "candylabsinc@gmail.com" ||
+      findUser.email === "ralf.tamer@gmail.com"
+    ) {
+      await ctx.db.user.update({
+        where: {
+          id: findUser.id,
+        },
+        data: {
+          role: "ADMIN",
+        },
+      });
+      return {
+        success: true,
+        message: "You are now admin",
+      };
+    }
+    return {
+      success: false,
+      message: "UNAUTHORIZED",
+    };
   }),
 });
