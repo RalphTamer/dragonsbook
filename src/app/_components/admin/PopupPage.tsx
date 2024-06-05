@@ -33,12 +33,16 @@ const PopupPage = () => {
         }}
         validationSchema={addPopupSchema}
         onSubmit={async (values) => {
-          await api.admin.AddPopup.query({
+          const res = await api.admin.AddPopup.query({
             content: values.content,
             day: isNaN(parseInt(values.day)) ? 1 : parseInt(values.day),
             link: values.link,
             month: values.month,
             title: values.title,
+          });
+          setMessage({
+            payload: res.message,
+            type: res.success === true ? "success" : "error",
           });
         }}
       >

@@ -52,7 +52,7 @@ export const authRouter = createTRPCRouter({
               ? undefined
               : input.instagramHandle,
           phoneNumber: input.phoneNumber,
-          airPoints: 0,
+          windPoints: 0,
           earthPoints: 0,
           firePoints: 0,
           waterPoints: 0,

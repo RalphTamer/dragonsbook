@@ -1,12 +1,12 @@
 "use client";
 import imageCompression from "browser-image-compression";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { style } from "~/lib/styles";
-import { UserRank } from "~/lib/types";
+import type { UserRank } from "~/lib/types";
 import EditProfileForm from "./EditProfileForm";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { api } from "~/trpc/react";
-import { UploadButton, compressImage, useUploadThing } from "~/lib/utils";
+import { useUploadThing } from "~/lib/utils";
 import SVGIcon from "./UI/SVGIcon";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import ImageCropper from "./UI/ImageCropper/ImageCropper";
@@ -22,7 +22,7 @@ type Props = {
 const EditProfile = (props: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const { startUpload } = useUploadThing("imageUploader", {});
+  const { startUpload } = useUploadThing("imageUploader");
 
   const { userData, userRank } = props;
   const [userImage, setUserImage] = useState<string | null>(
@@ -81,7 +81,7 @@ const EditProfile = (props: Props) => {
             }}
           ></img>
           <div
-            onClick={(e) => {
+            onClick={() => {
               setModalOpen(true);
             }}
             className="absolute bottom-[-5px] right-[-5px] bg-white p-1"
@@ -130,7 +130,9 @@ const EditProfile = (props: Props) => {
                 maxWidthOrHeight: 300,
               });
               const res = await startUpload([compressedFile]);
-              if (res == null || res[0] == null) {
+              console.log(res);
+
+              if (res?.[0] == null) {
                 return;
               }
               await api.user.changeProfilePicture.query({

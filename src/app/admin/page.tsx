@@ -3,7 +3,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
 import AdminHomePage from "../_components/admin/AdminHomePage";
 import { api } from "~/trpc/server";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 
 const Admin = async () => {
   const session = (await getServerAuthSession()) as unknown as NewSession;

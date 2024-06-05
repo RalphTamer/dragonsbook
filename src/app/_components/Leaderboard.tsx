@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 import LeaderboardCard from "./LeaderboardCard";
-import BottomSlideModal from "./UI/BottomSlideModal";
 import SVGIcon from "./UI/SVGIcon";
-import { humanize } from "~/lib/utils";
 import { api } from "~/trpc/react";
 import { getBgColor } from "../_services/leaderboard.service";
-import Skeleton from "react-loading-skeleton";
-import { Users, selectModalItems } from "~/lib/types";
+import type { Users } from "~/lib/types";
 import LeaderboardFilter from "./LeaderboardFilter";
 import AsyncButton from "./UI/AsyncButton";
 
@@ -21,9 +18,8 @@ const Leaderboard = (props: Props) => {
   );
   const skipNum = 6;
   const [skip, setSkip] = useState<number>(skipNum);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedFilterValue, setSelectedFilterValue] = useState<
-    "FIRE" | "WATER" | "AIR" | "EARTH" | "ALL"
+    "FIRE" | "WATER" | "WIND" | "EARTH" | "ALL"
   >("ALL");
   const [filterLoading, setFilterLoading] = useState<boolean>(false);
 
@@ -56,8 +52,8 @@ const Leaderboard = (props: Props) => {
           {leaderboardUsers.map((user, i) => {
             let points;
 
-            if (selectedFilterValue === "AIR") {
-              points = user.airPoints;
+            if (selectedFilterValue === "WIND") {
+              points = user.windPoints;
             } else if (selectedFilterValue === "EARTH") {
               points = user.earthPoints;
             } else if (selectedFilterValue === "FIRE") {
@@ -67,7 +63,7 @@ const Leaderboard = (props: Props) => {
             } else {
               points =
                 user.waterPoints +
-                user.airPoints +
+                user.windPoints +
                 user.earthPoints +
                 user.firePoints;
             }
@@ -94,10 +90,7 @@ const Leaderboard = (props: Props) => {
             ? "No More"
             : "Load more"
         }
-        disabled={
-          leaderboardUsers.length === props.users.allUsersCount ||
-          isLoading === true
-        }
+        disabled={leaderboardUsers.length === props.users.allUsersCount}
         onClick={async () => {
           await api.user.getLeaderboardData
             .query({

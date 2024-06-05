@@ -1,11 +1,8 @@
-import React, { useState, useRef, ReactNode } from "react";
+import React, { useState, useRef } from "react";
+import type { ReactNode } from "react";
 
-import ReactCrop, {
-  centerCrop,
-  makeAspectCrop,
-  Crop,
-  PixelCrop,
-} from "react-image-crop";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+import type { PixelCrop, Crop } from "react-image-crop";
 import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
 
@@ -55,12 +52,12 @@ export default function ImageCropper(props: Props) {
   const aspect = 1;
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files[0] != null) {
+    if (e.target.files?.[0] != null) {
       setFileName(e.target.files[0].name);
       setCrop(undefined); // Makes crop preview update between images.
       const reader = new FileReader();
       reader.addEventListener("load", () =>
-        setImgSrc(reader.result?.toString() || ""),
+        setImgSrc(reader.result?.toString() ?? ""),
       );
       if (e.target.files[0] == null) return;
       reader.readAsDataURL(e.target.files[0]);
@@ -131,7 +128,7 @@ export default function ImageCropper(props: Props) {
         previewCanvasRef.current
       ) {
         // We use canvasPreview as it's much faster than imgPreview.
-        canvasPreview(
+        await canvasPreview(
           imgRef.current,
           previewCanvasRef.current,
           completedCrop,
@@ -159,7 +156,7 @@ export default function ImageCropper(props: Props) {
             inputFileRef.current.click();
           }}
         >
-          {fileName != null ? fileName : "Select Image"}
+          {fileName ?? "Select Image"}
         </div>
         <input
           className="hidden"

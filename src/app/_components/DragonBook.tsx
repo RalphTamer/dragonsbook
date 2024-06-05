@@ -1,12 +1,10 @@
 "use client";
 import { style } from "~/lib/styles";
-import BadgesCard from "./BadgesCard";
 import SVGIcon from "./UI/SVGIcon";
 import type { User } from "@prisma/client";
 import type { Session } from "next-auth";
 import type { NextFont } from "next/dist/compiled/@next/font";
-import Link from "next/link";
-import { UserRank } from "~/lib/types";
+import type { UserRank } from "~/lib/types";
 import BadgesTypeSelector from "./BadgesTypeSelector";
 import { useState } from "react";
 import EditProfile from "./EditProfile";

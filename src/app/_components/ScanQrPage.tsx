@@ -10,7 +10,7 @@ const ScanQrPage = () => {
   return (
     <div className="container">
       <div
-        className="mx-12 my-12 mt-36 text-center"
+        className="mx-12 my-12 text-center"
         style={{
           fontSize: 12,
           fontWeight: 700,
@@ -112,7 +112,7 @@ const ScanQrPage = () => {
             }}
           >
             <img
-              src="/icons/air-badge.png"
+              src="/icons/wind-badge.png"
               style={{ maxWidth: "60px", width: "100%" }}
             ></img>
           </div>

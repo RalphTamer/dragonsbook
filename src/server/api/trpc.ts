@@ -10,7 +10,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";

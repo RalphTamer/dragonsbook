@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import { redirect } from "next/navigation";
 import GenerateEventsPage from "~/app/_components/admin/GenerateEventsPage";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 const edgeOfTheGalaxy = localFont({
   src: "../../../_fonts/EdgeOfTheGalaxyPoster-3zRAp.otf",

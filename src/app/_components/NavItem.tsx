@@ -1,20 +1,23 @@
 "use client";
-import { style } from "~/lib/styles";
 import Link from "./UI/Link";
-import { MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 
 type NavItemProps = {
   active?: boolean;
   text: string;
   href?: string;
-  onClick: MouseEventHandler<HTMLDivElement>;
+  onClick?: () => void;
 };
 
 const NavItem = (props: NavItemProps) => {
   return (
     <div
       className="mx-4 py-8 text-center"
-      onClick={props.onClick}
+      onClick={() => {
+        if (props.onClick != null) {
+          props.onClick();
+        }
+      }}
       style={{
         color: props.active === true ? "#ff3b31" : "#fff",
         borderBottom:

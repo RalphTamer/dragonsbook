@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import PopupPage from "~/app/_components/admin/PopupPage";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 
 const AddPopup = async () => {

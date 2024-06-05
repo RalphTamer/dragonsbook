@@ -1,9 +1,6 @@
 "use client";
-import { NextFont } from "next/dist/compiled/@next/font";
-import { useState } from "react";
+import type { NextFont } from "next/dist/compiled/@next/font";
 import GenerateEventsTab from "./GenerateEventsTab";
-import ViewEventsTab from "./ViewEventsTab";
-import { Event } from "@prisma/client";
 import Link from "next/link";
 
 type Props = {

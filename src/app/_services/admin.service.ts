@@ -1,6 +1,6 @@
 export const eventTypeOptions: {
   text: string;
-  value: "FIRE" | "WATER" | "EARTH" | "AIR";
+  value: "FIRE" | "WATER" | "EARTH" | "WIND";
 }[] = [
   {
     text: "fire",
@@ -11,8 +11,8 @@ export const eventTypeOptions: {
     value: "WATER",
   },
   {
-    text: "air",
-    value: "AIR",
+    text: "wind",
+    value: "WIND",
   },
   {
     text: "earth",

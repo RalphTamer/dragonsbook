@@ -14,7 +14,7 @@ const AsyncButton = (props: Props) => {
   return (
     <div className="flex justify-center">
       <button
-        disabled={props.disabled || isLoading === true}
+        disabled={props.disabled ?? isLoading === true}
         className={` px-4 py-2 text-center  text-white`}
         style={{
           ...props.style,

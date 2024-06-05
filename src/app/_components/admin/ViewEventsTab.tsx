@@ -1,5 +1,5 @@
 "use client";
-import { Event } from "@prisma/client";
+import type { Event } from "@prisma/client";
 import { useState } from "react";
 import { style } from "~/lib/styles";
 import { api } from "~/trpc/react";

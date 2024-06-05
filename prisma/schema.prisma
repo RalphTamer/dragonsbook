@@ -87,7 +87,7 @@ model User {
     sessions                 Session[]
     title                    String
     earthPoints              Int                        @default(0)
-    airPoints                Int                        @default(0)
+    windPoints               Int                        @default(0)
     waterPoints              Int                        @default(0)
     firePoints               Int                        @default(0)
     totalPoints              Int                        @default(0)

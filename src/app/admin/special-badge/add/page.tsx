@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import AddSpecialBadgePage from "~/app/_components/admin/AddSpecialBadgePage";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 
 const AddSpecialBadge = async () => {

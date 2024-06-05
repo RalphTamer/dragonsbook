@@ -20,11 +20,11 @@ const EditProfileForm = (props: Props) => {
           dateOfBirth: userData.dateOfBirth,
           email: userData.email,
           phoneNumber: userData.phoneNumber,
-          instagramHandle: userData.instagramHandle || "",
-          address: userData.address || "",
+          instagramHandle: userData.instagramHandle ?? "",
+          address: userData.address ?? "",
         }}
         validationSchema={editProfileSchema}
-        onSubmit={async (values, actions) => {
+        onSubmit={async (values) => {
           const res = await api.user.updateUserData.query({
             address: values.address,
             dateOfBirth: values.dateOfBirth,

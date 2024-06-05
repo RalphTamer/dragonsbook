@@ -28,28 +28,36 @@ export const NavbarPopup = (props: Props) => {
           className="container flex gap-4 py-8"
         >
           <div
-            className="flex w-[20%] flex-col items-center justify-center bg-black text-white"
+            className="relative flex w-[25%] flex-col items-center justify-center bg-black text-white"
             style={{
               borderRadius: 18,
               aspectRatio: 1,
             }}
           >
             <div
+              className="absolute left-1/2 top-1/2"
               style={{
-                fontSize: 30,
-                lineHeight: 1,
-                fontWeight: "bold",
+                transform: "translate(-50%,-50%)",
               }}
             >
-              {props.day}
-            </div>
-            <div
-              style={{
-                fontSize: 12,
-                lineHeight: 1,
-              }}
-            >
-              {props.month}
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: 30,
+                  lineHeight: 1,
+                  fontWeight: "bold",
+                }}
+              >
+                {props.day}
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  lineHeight: 1,
+                }}
+              >
+                {props.month}
+              </div>
             </div>
           </div>
           <div>

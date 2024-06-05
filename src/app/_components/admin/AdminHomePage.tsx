@@ -2,11 +2,10 @@
 
 import { User } from "@prisma/client";
 import _ from "lodash";
-import { skip } from "node:test";
-import { getBgColor } from "~/app/_services/leaderboard.service";
+
 import { api } from "~/trpc/react";
 import SVGIcon from "../UI/SVGIcon";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { style } from "~/lib/styles";
 import Link from "next/link";
 import AsyncButton from "../UI/AsyncButton";
@@ -26,7 +25,7 @@ const AdminHomePage = (props: Props) => {
   const [usersCount, setUsersCount] = useState<number>(props.users.usersCount);
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const debouncedHandleChange = useMemo(() => {
-    return _.debounce(async (value) => {
+    return _.debounce(async (value: string) => {
       setIsSearchLoading(true);
       setSearchQuery(value);
       const searchData = await api.admin.getAllUsers.query({
@@ -54,7 +53,7 @@ const AdminHomePage = (props: Props) => {
           type="text"
           name="q"
           onChange={async (e) => {
-            debouncedHandleChange(e.target.value);
+            await debouncedHandleChange(e.target.value);
           }}
         />
       </div>
@@ -73,7 +72,7 @@ const AdminHomePage = (props: Props) => {
                       style={{
                         aspectRatio: 1,
                       }}
-                      src={user.image || "/images/character.jpg"}
+                      src={user.image ?? "/images/character.jpg"}
                       alt=""
                     />
                   </div>

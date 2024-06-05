@@ -6,7 +6,7 @@ import SVGIcon from "../UI/SVGIcon";
 import { api } from "~/trpc/react";
 import AsyncButton from "../UI/AsyncButton";
 import { style } from "~/lib/styles";
-import { SpecialBadge as SB } from "@prisma/client";
+import type { SpecialBadge as SB } from "@prisma/client";
 
 type Props = {
   userId: string;
@@ -41,10 +41,14 @@ const EditUserSpecialBadges = (props: Props) => {
   const [ownedBadges, setOwnedBadges] = useState<
     Props["specialBadgesData"]["specialBadges"]
   >(props.specialBadgesData.specialBadges);
+  const [ownedBadgesCount, setOwnedBadgesCount] = useState<number>(
+    props.specialBadgesData.specialBadgesCount,
+  );
   const [allBadges, setAllBadges] = useState<
     Props["allBadges"]["specialBadges"]
   >(props.allBadges.specialBadges);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   return (
     <>
       <div
@@ -85,7 +89,7 @@ const EditUserSpecialBadges = (props: Props) => {
                           "Are you sure you want to take back the badge?",
                         ) === true
                       ) {
-                        const msg = await api.admin.removeUserBadge.query({
+                        await api.admin.removeUserBadge.query({
                           badgeId: badge.specialBadge.id,
                         });
 
@@ -107,15 +111,11 @@ const EditUserSpecialBadges = (props: Props) => {
             {ownedBadges.length > skipOwned - 2 && (
               <AsyncButton
                 buttonText={
-                  ownedBadges.length ===
-                  props.specialBadgesData.specialBadgesCount
+                  ownedBadges.length === ownedBadgesCount
                     ? "No More"
                     : "Load more"
                 }
-                disabled={
-                  ownedBadges.length ===
-                  props.specialBadgesData.specialBadgesCount
-                }
+                disabled={ownedBadges.length === ownedBadgesCount}
                 onClick={async () => {
                   const res = await api.admin.getSpecialBadgesByUserId.query({
                     skip: skipOwned,
@@ -180,11 +180,13 @@ const EditUserSpecialBadges = (props: Props) => {
                         });
 
                         if (badgeRes.badgeData != null) {
+                          setOwnedBadgesCount((prev) => prev + 1);
                           setOwnedBadges((prev) => {
                             return [badgeRes.badgeData, ...prev];
                           });
                         }
                         setIsLoading(false);
+                        setModalIsVisible(false);
                         alert(badgeRes.message);
                       }
                     }}

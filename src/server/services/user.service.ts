@@ -13,9 +13,9 @@ export const getDataBasedOnEventType = (args: {
         increment: points,
       },
     };
-  } else if (eventType === "AIR") {
+  } else if (eventType === "WIND") {
     data = {
-      airPoints: {
+      windPoints: {
         increment: points,
       },
       totalPoints: {

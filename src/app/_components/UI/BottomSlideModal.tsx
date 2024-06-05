@@ -59,7 +59,7 @@ const BottomSlideModal: React.FC<ModalProps> = ({
           bottom: 0,
           //   top: 0,
           right: 0,
-          height: height != null ? height : "fit-content",
+          height: height ?? "fit-content",
           width: "100vw",
           maxWidth: 500,
           overflowY: "auto",

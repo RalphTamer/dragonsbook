@@ -11,13 +11,13 @@ export type UserAttendance = ({
   eventId: string;
 })[];
 export const getCompletedEventByType = (UserAttendance: UserAttendance) => {
-  let completedAirEvents = 0;
+  let completedwindEvents = 0;
   let completedFireEvents = 0;
   let completedWaterEvents = 0;
   let completedEarthEvents = 0;
   UserAttendance.forEach((event) => {
-    if (event.attendedEvent.type === "AIR") {
-      completedAirEvents++;
+    if (event.attendedEvent.type === "WIND") {
+      completedwindEvents++;
     } else if (event.attendedEvent.type === "WATER") {
       completedWaterEvents++;
     } else if (event.attendedEvent.type === "FIRE") {
@@ -28,7 +28,7 @@ export const getCompletedEventByType = (UserAttendance: UserAttendance) => {
   });
 
   return {
-    completedAirEvents,
+    completedwindEvents,
     completedFireEvents,
     completedWaterEvents,
     completedEarthEvents,

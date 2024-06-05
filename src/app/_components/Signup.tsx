@@ -2,7 +2,7 @@
 
 import { Form, Formik } from "formik";
 import CustomInput from "./UI/CustomInput";
-import { editProfileSchema, signupFormSchema } from "~/schema";
+import { signupFormSchema } from "~/schema";
 import { api } from "~/trpc/react";
 import Link from "next/link";
 import { style } from "~/lib/styles";
@@ -24,7 +24,6 @@ const SignupForm = () => {
         }}
         validationSchema={signupFormSchema}
         onSubmit={async (values, actions) => {
-
           await api.auth.userSignup.mutate({
             email: values.email,
             password: values.password,
@@ -108,7 +107,7 @@ const SignupForm = () => {
         }}
       >
         Already have an account ?
-        <span onClick={() => {}} style={{ color: style.color.fireRed }}>
+        <span style={{ color: style.color.fireRed }}>
           <Link href={"/auth/login"}>Login</Link>
         </span>
       </div>

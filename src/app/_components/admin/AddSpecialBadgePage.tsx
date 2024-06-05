@@ -112,10 +112,10 @@ const AddSpecialBadgePage = () => {
                         maxWidthOrHeight: 300,
                       });
                       const res = await startUpload([compressedFile]);
-                      if (res == null || res[0] == null) {
+                      if (res?.[0] == null) {
                         return;
                       }
-                      setFieldValue("image", res[0].url);
+                      await setFieldValue("image", res[0].url);
                       setModalOpen(false);
                     }}
                     buttonText={

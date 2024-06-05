@@ -6,7 +6,6 @@ import { useState } from "react";
 import AsyncButton from "../UI/AsyncButton";
 import { api } from "~/trpc/react";
 import { style } from "~/lib/styles";
-import Link from "next/link";
 import SVGIcon from "../UI/SVGIcon";
 
 type Props = {

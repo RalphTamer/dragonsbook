@@ -1,8 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { de, faker } from "@faker-js/faker";
-import { hash } from "bcrypt";
-const prisma = new PrismaClient();
+import { faker } from "@faker-js/faker";
 
+import QRCode from "qrcode";
+import { hash } from "bcrypt";
+import { UTApi } from "uploadthing/server";
+const prisma = new PrismaClient();
+// const utapi = new UTApi({
+//   // apiKey:process.env
+// });
 function generateUniqueNumbers(allEventsLength: number) {
   const maxNumber = allEventsLength - 1;
   const result: number[] = [];
@@ -45,11 +50,11 @@ const userSeed = async () => {
   });
   let i = 0;
   while (i < 20) {
-    const airPoints = Math.ceil(Math.random() * 100);
+    const windPoints = Math.ceil(Math.random() * 100);
     const waterPoints = Math.ceil(Math.random() * 100);
     const firePoints = Math.ceil(Math.random() * 100);
     const earthPoints = Math.ceil(Math.random() * 100);
-    const totalPoints = waterPoints + firePoints + airPoints + earthPoints;
+    const totalPoints = waterPoints + firePoints + windPoints + earthPoints;
     await prisma.user.create({
       data: {
         dateOfBirth: faker.date.birthdate(),
@@ -59,7 +64,7 @@ const userSeed = async () => {
         waterPoints,
         firePoints,
         earthPoints,
-        airPoints,
+        windPoints,
         totalPoints,
         password,
         role: "USER",
@@ -73,28 +78,56 @@ const userSeed = async () => {
 const eventsSeed = async () => {
   // const allUsers = await prisma.user.findMany();
   const randomType = () => {
-    const num = Math.floor(Math.random() * 100);
+    const num = Math.ceil(Math.random() * 100);
     let type;
     if (num < 25) {
       return (type = "EARTH");
     } else if (num > 25 && num < 50) {
       return (type = "WATER");
     } else if (num > 50 && num < 75) {
-      return (type = "AIR");
+      return (type = "WIND");
     } else {
       return (type = "FIRE");
     }
   };
   let i = 0;
   while (i < 20) {
-    await prisma.event.create({
+    await delay(500);
+    const event = await prisma.event.create({
       data: {
         name: faker.word.words(3),
-        qr: faker.image.url(),
         type: randomType(),
         pointsAdded: Math.ceil(Math.random() * 4),
       },
     });
+    await delay(500);
+    // const qrCodeImageBuffer = await QRCode.toBuffer(
+    //   `${process.env.BASE_URL}/redeem/${event.id}`,
+    //   {
+    //     type: "png",
+    //     errorCorrectionLevel: "H",
+    //   },
+    // );
+    // const blob = new Blob([qrCodeImageBuffer]);
+
+    // const file = new File(
+    //   [blob],
+    //   `file-qr-${Math.ceil(Math.random() * 1234235) * Math.ceil(Math.random() * 1234235)}.png`,
+    //   {
+    //     type: "image/png",
+    //   },
+    // );
+    // const response = await utapi.uploadFiles(file);
+    // if (response.data != null) {
+    //   await prisma.event.update({
+    //     data: {
+    //       qr: response.data.url,
+    //     },
+    //     where: {
+    //       id: event.id,
+    //     },
+    //   });
+    // }
     i++;
   }
 };
@@ -136,7 +169,7 @@ const changePoints = async () => {
   const allUsers = await prisma.user.findMany();
 
   allUsers.forEach(async (user) => {
-    const randomAirNumber = Math.floor(Math.random() * 20);
+    const randomwindNumber = Math.floor(Math.random() * 20);
     const randomFireNumber = Math.floor(Math.random() * 20);
     const randomEarthNumber = Math.floor(Math.random() * 20);
     const randomWaterNumber = Math.floor(Math.random() * 20);
@@ -148,7 +181,7 @@ const changePoints = async () => {
       data: {
         firePoints: randomFireNumber,
         waterPoints: randomWaterNumber,
-        airPoints: randomAirNumber,
+        windPoints: randomwindNumber,
         earthPoints: randomEarthNumber,
       },
     });
@@ -165,7 +198,7 @@ const addTotalPoints = async () => {
       },
       data: {
         totalPoints:
-          user.airPoints +
+          user.windPoints +
           user.firePoints +
           user.earthPoints +
           user.waterPoints,
@@ -274,25 +307,19 @@ async function main() {
   // await deleteAllUsers();
   // await changePoints();
   // await addTotalPoints();
-  // await userSeed();
-  // await delay(1000);
-  // await adminSeed();
-  // await delay(1000);
-  // await eventsSeed();
-  // await delay(1000);
-  // await userAttendance();
-  // await delay(1000);
-  // await specialBadgesSeed();
-  // await delay(1000);
-  // await addSpecialBadgeToMyAccount();
-  // await delay(1000);
-  // await popupSeed();
-  // await delay(1000);
-  // await prisma.event.deleteMany({
-  //   where: {
-  //     qr: null,
-  //   },
-  // });
+  await userSeed();
+  await delay(1000);
+  await adminSeed();
+  await delay(1000);
+  await eventsSeed();
+  await delay(1000);
+  await userAttendance();
+  await delay(1000);
+  await specialBadgesSeed();
+  await delay(1000);
+  await addSpecialBadgeToMyAccount();
+  await delay(1000);
+  await popupSeed();
 }
 
 main()

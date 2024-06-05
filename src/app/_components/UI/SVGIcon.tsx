@@ -28,7 +28,8 @@ type Props = {
     | "loader"
     | "check"
     | "instagram"
-    | "exclamation";
+    | "exclamation"
+    | "antenna-bars";
 };
 
 const SVGIcon = (props: Props) => {
@@ -170,6 +171,15 @@ const SVGIcon = (props: Props) => {
         <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
         <path d="M12 9v4" />
         <path d="M12 16v.01" />
+      </Fragment>
+    );
+  } else if (props.name === "antenna-bars") {
+    svgInnerElem = (
+      <Fragment>
+        {/* <path stroke="none" d="M0 0h24v24H0z" fill="none" /> */}
+        <path d="M6 18l0 -3" />
+        <path d="M10 18l0 -6" />
+        <path d="M14 18l0 -9" />
       </Fragment>
     );
   } else if (props.name === "instagram") {

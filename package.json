@@ -20,7 +20,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
-    "@uploadthing/react": "^6.5.4",
+    "@uploadthing/react": "^6.6.0",
     "@yudiel/react-qr-scanner": "^2.0.2",
     "bcrypt": "^5.1.1",
     "browser-image-compression": "^2.0.2",
@@ -37,7 +37,7 @@
     "react-loading-skeleton": "^3.4.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
-    "uploadthing": "^6.10.4",
+    "uploadthing": "^6.12.0",
     "yup": "^0.32.11",
     "zod": "^3.23.3",
     "zustand": "^4.5.2"

@@ -29,7 +29,9 @@ export const UploadButton = generateUploadButton<OurFileRouter>();
 export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
 
 export const { useUploadThing, uploadFiles } =
-  generateReactHelpers<OurFileRouter>();
+  generateReactHelpers<OurFileRouter>({
+    url: `${process.env.BASE_URL}/api/uploadthing`,
+  });
 
 export const compressImage = async (
   file: File,
@@ -47,9 +49,19 @@ export const compressImage = async (
   ctx.drawImage(imageBitmap, 0, 0);
 
   // Turn into Blob
-  const blob = (await new Promise((resolve) =>
-    canvas.toBlob(resolve, type, quality),
-  )) as unknown as Blob;
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Failed to create blob"));
+        }
+      },
+      type,
+      quality,
+    );
+  });
 
   const compressedFile = new File([blob], file.name, {
     type: file.type,
@@ -61,73 +73,6 @@ export const getBaseUrl = () => {
   if (typeof window !== "undefined") return window.location.origin;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
-};
-export const SvgToImg = (args: {
-  svgElementId: string;
-  func: (file: File) => void;
-}) => {
-  const svgElement = document.getElementById(
-    args.svgElementId,
-  ) as SVGSVGElement | null;
-  if (!svgElement) return;
-
-  // Get the SVG content as a string
-  const svgString = new XMLSerializer().serializeToString(svgElement);
-
-  // Create a Blob from the SVG string
-  const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
-  const url = URL.createObjectURL(svgBlob);
-
-  // Create an Image element
-  const img = new Image();
-
-  img.onload = async () => {
-    // Create a Canvas element
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-
-    if (!ctx) {
-      console.error("Failed to get canvas context");
-      return;
-    }
-
-    // Set canvas dimensions to match the SVG dimensions
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Draw the SVG onto the Canvas
-    ctx.drawImage(img, 0, 0);
-
-    // Convert the Canvas content to a data URL (JPG format)
-    const jpgDataUrl = canvas.toDataURL("image/jpeg");
-
-    // Revoke the object URL after use
-    URL.revokeObjectURL(url);
-
-    // Convert the data URL to a Blob
-    const byteString = atob(jpgDataUrl.split(",")[1]!);
-    const mimeString = jpgDataUrl!.split(",")[0]!.split(":")[1]!.split(";")[0];
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const intArray = new Uint8Array(arrayBuffer);
-
-    for (let i = 0; i < byteString.length; i++) {
-      intArray[i] = byteString.charCodeAt(i);
-    }
-
-    const jpgBlob = new Blob([intArray], { type: mimeString });
-
-    // Create a File from the Blob
-    const file = new File([jpgBlob], "image.jpg", {
-      type: mimeString,
-    });
-    args.func(file);
-  };
-  img.onerror = (error) => {
-    console.error("Error loading image", error);
-  };
-
-  // Set the image source to the object URL
-  img.src = url;
 };
 
 export function formatNumber(num: number): string {

@@ -1,9 +1,9 @@
 import { style } from "~/lib/styles";
-import { selectModalItems } from "~/lib/types";
+import type { selectModalItems } from "~/lib/types";
 
 export const getBgColor = (item: (typeof selectModalItems)[number]) => {
-  if (item === "AIR") {
-    return style.color.airYellow;
+  if (item === "WIND") {
+    return style.color.windYellow;
   } else if (item === "EARTH") {
     return style.color.earthGreen;
   } else if (item === "FIRE") {

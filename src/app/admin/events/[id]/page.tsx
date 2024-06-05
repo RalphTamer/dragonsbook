@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import ViewEventPage from "~/app/_components/admin/ViewEventPage";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 

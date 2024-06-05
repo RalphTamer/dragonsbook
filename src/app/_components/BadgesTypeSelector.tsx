@@ -2,9 +2,8 @@
 import { style } from "~/lib/styles";
 import BadgesCard from "./BadgesCard";
 import { useState } from "react";
-import { NextFont } from "next/dist/compiled/@next/font";
-import { UserRank } from "~/lib/types";
-import { User } from "@prisma/client";
+import type { NextFont } from "next/dist/compiled/@next/font";
+import type { UserRank } from "~/lib/types";
 import SpecialBadge from "./SpecialBadge";
 import type { DragonBookUser } from "./DragonBook";
 
@@ -77,11 +76,11 @@ const BadgesTypeSelector = (props: Props) => {
           />
           <BadgesCard
             subtitle={"Climbing / Cycling / Slack Line..."}
-            badgeName="AIR BADGE"
-            points={userData.airPoints}
-            rank={userRank.rankByAirPoints}
-            color={style.color.airYellow}
-            image="/icons/air-badge.png"
+            badgeName="WIND BADGE"
+            points={userData.windPoints}
+            rank={userRank.rankBywindPoints}
+            color={style.color.windYellow}
+            image="/icons/wind-badge.png"
           />
           <BadgesCard
             subtitle={"Hiking / Trail Running..."}
@@ -99,9 +98,14 @@ const BadgesTypeSelector = (props: Props) => {
               return <SpecialBadge badge={badge.specialBadge} key={badge.id} />;
             })
           ) : (
-            <div className="mt-8 text-center font-bold" style={{
-              color:style.color.fireRed
-            }}>No special badges acquired</div>
+            <div
+              className="mt-8 text-center font-bold"
+              style={{
+                color: style.color.fireRed,
+              }}
+            >
+              No special badges acquired
+            </div>
           )}
         </div>
       )}

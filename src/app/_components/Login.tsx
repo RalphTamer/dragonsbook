@@ -3,7 +3,7 @@
 import { Form, Formik } from "formik";
 import CustomInput from "./UI/CustomInput";
 import { forgotPasswordFormSchema } from "~/schema";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { style } from "~/lib/styles";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import Image from "next/image";
 
 const LoginForm = () => {
   const [submitErrors, setSubmitErrors] = useState<boolean>(false);
+
   return (
     <div className="container ">
       <div
@@ -46,7 +47,7 @@ const LoginForm = () => {
                 email: values.email,
                 password: values.password,
                 redirect: true,
-                callbackUrl: "/dragon-book/12",
+                callbackUrl: "/dragon-book",
               });
             } else {
               setSubmitErrors(true);
@@ -107,7 +108,7 @@ const LoginForm = () => {
         }}
       >
         Forgot your password ?{" "}
-        <span onClick={() => {}} style={{ color: style.color.fireRed }}>
+        <span style={{ color: style.color.fireRed }}>
           <Link href={"/auth/forgot-password"}>click here</Link>
         </span>
       </div>

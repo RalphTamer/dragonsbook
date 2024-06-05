@@ -30,7 +30,7 @@ export const adminRouter = createTRPCRouter({
       const allUsers = await ctx.db.user.findMany({
         select: {
           address: true,
-          airPoints: true,
+          windPoints: true,
           dateOfBirth: true,
           earthPoints: true,
           email: true,
@@ -57,13 +57,13 @@ export const adminRouter = createTRPCRouter({
       });
       return { allUsers, usersCount };
     } catch (e) {
-      throw new Error(e + "");
+      throw new Error(" error");
     }
   }),
   changeUserPoints: AdminProtectedProcedure.input(
     z.object({
       userId: z.string(),
-      airPoints: z.number(),
+      windPoints: z.number(),
       firePoints: z.number(),
       waterPoints: z.number(),
       earthPoints: z.number(),
@@ -71,7 +71,7 @@ export const adminRouter = createTRPCRouter({
   ).query(async ({ input, ctx }) => {
     try {
       const totalPoints =
-        input.airPoints +
+        input.windPoints +
         input.earthPoints +
         input.firePoints +
         input.waterPoints;
@@ -80,7 +80,7 @@ export const adminRouter = createTRPCRouter({
           id: input.userId,
         },
         data: {
-          airPoints: input.airPoints,
+          windPoints: input.windPoints,
           waterPoints: input.waterPoints,
           firePoints: input.firePoints,
           earthPoints: input.earthPoints,
@@ -88,7 +88,7 @@ export const adminRouter = createTRPCRouter({
         },
         select: {
           address: true,
-          airPoints: true,
+          windPoints: true,
           dateOfBirth: true,
           earthPoints: true,
           email: true,
@@ -141,7 +141,7 @@ export const adminRouter = createTRPCRouter({
         },
       });
     } catch (e) {
-      throw new Error(e + "error deleting user");
+      throw new Error("error deleting user");
     }
   }),
   AddPopup: AdminProtectedProcedure.input(
@@ -173,9 +173,13 @@ export const adminRouter = createTRPCRouter({
       }
       return {
         success: true,
+        message: "Popup creation success",
       };
     } catch (e) {
-      throw new Error("Popup creation failed , try again later");
+      return {
+        success: false,
+        message: "Popup creation failed , please try again",
+      };
     }
   }),
   AddSpecialBadge: AdminProtectedProcedure.input(
@@ -352,14 +356,16 @@ export const adminRouter = createTRPCRouter({
         },
       },
     );
-    if (specialBadgeAcquired != null && specialBadgeAcquired.length > 0) {
-      specialBadgeAcquired.forEach(async (acq) => {
-        await ctx.db.userAcquiredSpecialBadge.delete({
-          where: {
-            id: acq.id,
-          },
-        });
-      });
+    if (specialBadgeAcquired.length > 0) {
+      await Promise.all(
+        specialBadgeAcquired.map(async (acq) => {
+          await ctx.db.userAcquiredSpecialBadge.delete({
+            where: {
+              id: acq.id,
+            },
+          });
+        }),
+      );
     }
     const spbadge = await ctx.db.specialBadge.findFirst({
       where: {
@@ -373,7 +379,7 @@ export const adminRouter = createTRPCRouter({
           id: input.badgeId,
         },
       });
-      const key = spbadge?.image.split("/").reverse()[0]!;
+      const key = spbadge.image.split("/").reverse()[0]!;
       await utapi.deleteFiles([key]);
       return {
         success: true,

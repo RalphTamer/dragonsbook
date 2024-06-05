@@ -30,7 +30,7 @@ export async function comparePasswordToHash(args: {
 
 export function sendEmail(args: { recipient_email: string; url: string }) {
   return new Promise((resolve, reject) => {
-    var transporter = createTransport({
+    const transporter = createTransport({
       service: "gmail",
       auth: {
         user: process.env.MY_EMAIL,
@@ -74,7 +74,7 @@ export function sendEmail(args: { recipient_email: string; url: string }) {
   </body>
   </html>`,
     };
-    transporter.sendMail(mail_configs, function (error, info) {
+    transporter.sendMail(mail_configs, function (error) {
       if (error) {
         return reject({ message: `An error has occured` });
       }

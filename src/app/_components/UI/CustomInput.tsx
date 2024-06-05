@@ -1,5 +1,4 @@
 import { useField } from "formik";
-import SVGIcon from "./SVGIcon";
 import { style } from "~/lib/styles";
 type Props = {
   name: string;

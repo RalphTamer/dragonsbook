@@ -1,4 +1,4 @@
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 export type Users = {
   allUsers: {
@@ -14,7 +14,7 @@ export type Users = {
     id: string;
     role: string;
     earthPoints: number;
-    airPoints: number;
+    windPoints: number;
     waterPoints: number;
     firePoints: number;
   }[];
@@ -23,7 +23,7 @@ export type Users = {
 
 export const selectModalItems = [
   "ALL",
-  "AIR",
+  "WIND",
   "FIRE",
   "WATER",
   "EARTH",
@@ -33,7 +33,7 @@ export type UserRank = {
   rankByTotalPoints: number;
   rankByFirePoints: number;
   rankByEarthPoints: number;
-  rankByAirPoints: number;
+  rankBywindPoints: number;
   rankByWaterPoints: number;
 };
 

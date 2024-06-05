@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import ViewSpecialBadgesPage from "~/app/_components/admin/ViewSpecialBadgesPage";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 

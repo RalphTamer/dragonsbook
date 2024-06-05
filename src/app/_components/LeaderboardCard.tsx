@@ -56,15 +56,21 @@ const LeaderboardCard = (props: Props) => {
             borderRadius: "12px",
           }}
         >
-          <div
-            className="flex flex-col  "
-            style={{ lineHeight: 1, color: fontColor }}
-          >
-            {/* TODO handle if more than 1000 make 1k */}
-            <div style={{ fontWeight: "bold", fontSize: 16 }}>
-              {formatNumber(props.totalPoints)}
+          <div className="relative">
+            <div
+              className="absolute left-1/2 top-1/2 flex flex-col  "
+              style={{
+                lineHeight: 1,
+                color: fontColor,
+                transform: "translate(-50%,-50%)",
+              }}
+            >
+              {/* TODO handle if more than 1000 make 1k */}
+              <div style={{ fontWeight: "bold", fontSize: 16 }}>
+                {formatNumber(props.totalPoints)}
+              </div>
+              <div style={{ fontSize: 10 }}>PTS</div>
             </div>
-            <div style={{ fontSize: 10 }}>PTS</div>
           </div>
         </div>
       </div>

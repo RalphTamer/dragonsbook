@@ -6,9 +6,8 @@ import NavSliderMenu from "./NavSliderMenu";
 import { usePathname } from "next/navigation";
 import { humanizePaths } from "~/lib/utils";
 import type { NextFont } from "next/dist/compiled/@next/font";
-import { style } from "~/lib/styles";
 import { NavbarPopup } from "./NavbarPopup";
-import { Popup } from "@prisma/client";
+import type { Popup } from "@prisma/client";
 type Props = {
   id: string;
   edgeOfTheGalaxy: NextFont;

@@ -14,7 +14,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         filterValue: z
-          .literal("AIR")
+          .literal("WIND")
           .or(z.literal("EARTH"))
           .or(z.literal("FIRE"))
           .or(z.literal("WATER"))
@@ -26,9 +26,9 @@ export const userRouter = createTRPCRouter({
       const filterValue = input.filterValue;
       const take = 6;
       let orderBy = {};
-      if (filterValue === "AIR") {
+      if (filterValue === "WIND") {
         orderBy = {
-          airPoints: "desc",
+          windPoints: "desc",
         };
       } else if (filterValue === "EARTH") {
         orderBy = {
@@ -50,7 +50,7 @@ export const userRouter = createTRPCRouter({
       const allUsers = await ctx.db.user.findMany({
         select: {
           password: false,
-          airPoints: true,
+          windPoints: true,
           earthPoints: true,
           email: true,
           firePoints: true,
@@ -105,12 +105,12 @@ export const userRouter = createTRPCRouter({
           earthPoints: "desc",
         },
       });
-      const allUsersByAir = await ctx.db.user.findMany({
+      const allUsersBywind = await ctx.db.user.findMany({
         select: {
           id: true,
         },
         orderBy: {
-          airPoints: "desc",
+          windPoints: "desc",
         },
       });
       const allUsersByWater = await ctx.db.user.findMany({
@@ -126,13 +126,13 @@ export const userRouter = createTRPCRouter({
         usersByTotalPoints,
         usersByFirePoints,
         usersByEarthPoints,
-        usersByAirPoints,
+        usersBywindPoints,
         usersByWaterPoints,
       ] = await Promise.all([
         allUsersByTotal,
         allUsersByFire,
         allUsersByEarth,
-        allUsersByAir,
+        allUsersBywind,
         allUsersByWater,
       ]);
 
@@ -142,8 +142,8 @@ export const userRouter = createTRPCRouter({
         usersByFirePoints.findIndex((i) => i.id === input.userId) + 1;
       const earthRank =
         usersByEarthPoints.findIndex((i) => i.id === input.userId) + 1;
-      const airRank =
-        usersByAirPoints.findIndex((i) => i.id === input.userId) + 1;
+      const windRank =
+        usersBywindPoints.findIndex((i) => i.id === input.userId) + 1;
       const waterRank =
         usersByWaterPoints.findIndex((i) => i.id === input.userId) + 1;
 
@@ -151,7 +151,7 @@ export const userRouter = createTRPCRouter({
         rankByTotalPoints: totalRank,
         rankByFirePoints: fireRank,
         rankByEarthPoints: earthRank,
-        rankByAirPoints: airRank,
+        rankBywindPoints: windRank,
         rankByWaterPoints: waterRank,
       };
     }),
@@ -168,7 +168,7 @@ export const userRouter = createTRPCRouter({
         },
         select: {
           address: true,
-          airPoints: true,
+          windPoints: true,
           dateOfBirth: true,
           earthPoints: true,
           email: true,
@@ -251,7 +251,7 @@ export const userRouter = createTRPCRouter({
           },
           select: {
             address: true,
-            airPoints: true,
+            windPoints: true,
             dateOfBirth: true,
             earthPoints: true,
             email: true,
@@ -283,7 +283,7 @@ export const userRouter = createTRPCRouter({
         };
       }
     }),
-  getPopupData: publicProcedure.query(async ({ input, ctx }) => {
+  getPopupData: publicProcedure.query(async ({ ctx }) => {
     const popupData = await ctx.db.popup.findFirst();
 
     return popupData;
@@ -328,7 +328,7 @@ export const userRouter = createTRPCRouter({
         },
       });
       const eventType = event.type;
-      let data = getDataBasedOnEventType({
+      const data = getDataBasedOnEventType({
         eventType,
         points: event.pointsAdded,
       });

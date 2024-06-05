@@ -1,14 +1,15 @@
 import { selectModalItems } from "~/lib/types";
 import { humanize } from "~/lib/utils";
-import { api } from "~/trpc/react";
 import { getBgColor } from "../_services/leaderboard.service";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import SVGIcon from "./UI/SVGIcon";
 import { useState } from "react";
 
 type Props = {
-  selectedFilterValue: "FIRE" | "WATER" | "AIR" | "EARTH" | "ALL";
-  onChangeModalValue: (item: "FIRE" | "WATER" | "AIR" | "EARTH" | "ALL") => {};
+  selectedFilterValue: "FIRE" | "WATER" | "WIND" | "EARTH" | "ALL";
+  onChangeModalValue: (
+    item: "FIRE" | "WATER" | "WIND" | "EARTH" | "ALL",
+  ) => void;
 };
 
 const LeaderboardFilter = (props: Props) => {
@@ -20,9 +21,18 @@ const LeaderboardFilter = (props: Props) => {
       className="mb-4 flex justify-between py-4"
       style={{ fontSize: 13, borderBottom: "1px solid #ccc" }}
     >
-      <div className="flex items-center space-x-1">
-        <SVGIcon name="filter" size={16} />
-        <div className="flex items-center space-x-1">
+      <div className=" space-x-1">
+        <div className="flex  items-center space-x-1">
+          <div
+            className="  "
+            style={
+              {
+                // transform: "scale(1, -1)",
+              }
+            }
+          >
+            <SVGIcon className="flex " name="antenna-bars" size={26} />
+          </div>
           <div
             className="flex items-center space-x-1"
             onClick={() => {

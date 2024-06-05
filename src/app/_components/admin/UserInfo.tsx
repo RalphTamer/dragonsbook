@@ -1,6 +1,6 @@
 "use client";
-import { SpecialBadge, User } from "@prisma/client";
-import { useRef, useState } from "react";
+import type { SpecialBadge, User } from "@prisma/client";
+import { useState } from "react";
 import { style } from "~/lib/styles";
 import { api } from "~/trpc/react";
 import AsyncButton from "../UI/AsyncButton";
@@ -45,7 +45,7 @@ const UserInfo = (props: Props) => {
             maxWidth: 200,
             borderRadius: 18,
           }}
-          src={userData.image || "/images/character.jpg"}
+          src={userData.image ?? "/images/character.jpg"}
         />
         <div
           style={{

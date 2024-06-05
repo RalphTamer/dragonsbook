@@ -1,7 +1,7 @@
 "use client";
 
 import { Formik, Form } from "formik";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { style } from "~/lib/styles";
 import { generateEventSchema } from "~/schema";
 import { api } from "~/trpc/react";
@@ -70,8 +70,8 @@ const GenerateEventsTab = () => {
                 style={{
                   borderRadius: 12,
                 }}
-                onChange={(e) => {
-                  setFieldValue("type", e.target.value);
+                onChange={async (e) => {
+                  await setFieldValue("type", e.target.value);
                 }}
               >
                 {eventTypeOptions.map((option) => {

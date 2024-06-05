@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import SVGIcon from "~/app/_components/UI/SVGIcon";
-import { style } from "~/lib/styles";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 

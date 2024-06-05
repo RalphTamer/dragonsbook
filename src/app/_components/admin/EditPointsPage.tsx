@@ -2,10 +2,10 @@ import { useState } from "react";
 import { style } from "~/lib/styles";
 import { api } from "~/trpc/react";
 import AsyncButton from "../UI/AsyncButton";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 
 type DragonPoints = {
-  airPoints: number;
+  windPoints: number;
   firePoints: number;
   waterPoints: number;
   earthPoints: number;
@@ -15,7 +15,7 @@ type Props = {
 };
 const EditPointsPage = (props: Props) => {
   const [dragonPoints, setDragonPoints] = useState<DragonPoints>({
-    airPoints: props.userData.airPoints,
+    windPoints: props.userData.windPoints,
     firePoints: props.userData.firePoints,
     earthPoints: props.userData.earthPoints,
     waterPoints: props.userData.waterPoints,
@@ -30,8 +30,8 @@ const EditPointsPage = (props: Props) => {
     value: keyof DragonPoints;
   }[] = [
     {
-      name: "air points",
-      value: "airPoints",
+      name: "wind points",
+      value: "windPoints",
     },
     {
       name: "fire points",

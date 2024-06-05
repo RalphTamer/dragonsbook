@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import UserInfo from "~/app/_components/admin/UserInfo";
-import { NewSession } from "~/lib/types";
+import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
