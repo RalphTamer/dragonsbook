@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import type { PixelCrop, Crop } from "react-image-crop";
 import { canvasPreview } from "./canvasPreview";
-import { useDebounceEffect } from "./useDebounceEffect";
+// import { useDebounceEffect } from "./useDebounceEffect";
 
 import "react-image-crop/dist/ReactCrop.css";
 import SVGIcon from "../SVGIcon";
@@ -119,33 +119,29 @@ export default function ImageCropper(props: Props) {
     props.loading(false);
   }
 
-  useDebounceEffect(
-    () => {
-      // Synchronous function to handle asynchronous logic
-      const handleAsync = async () => {
-        if (
-          completedCrop?.width &&
-          completedCrop?.height &&
-          imgRef.current &&
-          previewCanvasRef.current
-        ) {
-          // We use canvasPreview as it's much faster than imgPreview.
-          await canvasPreview(
-            imgRef.current,
-            previewCanvasRef.current,
-            completedCrop,
-            scale,
-            rotate,
-          );
-        }
-      };
+  const handleAsync = async () => {
+    if (
+      completedCrop?.width &&
+      completedCrop?.height &&
+      imgRef.current &&
+      previewCanvasRef.current
+    ) {
+      // We use canvasPreview as it's much faster than imgPreview.
+      await canvasPreview(
+        imgRef.current,
+        previewCanvasRef.current,
+        completedCrop,
+        scale,
+        rotate,
+      );
+    }
+  };
 
-      // Call the asynchronous function
-      handleAsync();
-    },
-    100,
-    [completedCrop, scale, rotate],
-  );
+  // Use regular useEffect
+  useEffect(() => {
+    // Call the asynchronous function directly
+    handleAsync();
+  }, [completedCrop, scale, rotate]);
   return (
     <div className="App space-y-2">
       <div className="Crop-Controls">
