@@ -10,7 +10,6 @@ import { useUploadThing } from "~/lib/utils";
 import SVGIcon from "./UI/SVGIcon";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import ImageCropper from "./UI/ImageCropper/ImageCropper";
-// import ImageCropper from "./UI/ImageCropper";
 
 type Props = {
   userData: Omit<User, "password">;
