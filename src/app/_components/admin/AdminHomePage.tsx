@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import _ from "lodash";
 
 import { api } from "~/trpc/react";
@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import { style } from "~/lib/styles";
 import Link from "next/link";
 import AsyncButton from "../UI/AsyncButton";
+import Image from "next/image";
 type Props = {
   users: {
     allUsers: Omit<User, "password">[];
@@ -68,12 +69,19 @@ const AdminHomePage = (props: Props) => {
                   className="my-2 flex gap-4 py-4"
                 >
                   <div className="w-[30%]">
-                    <img
+                    <Image
+                      src={user.image ?? "/images/character.jpg"}
+                      alt="image"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      priority
                       style={{
+                        width: "100%",
+                        height: "100%",
+                        //
                         aspectRatio: 1,
                       }}
-                      src={user.image ?? "/images/character.jpg"}
-                      alt=""
                     />
                   </div>
                   <div className="w-[70%]">

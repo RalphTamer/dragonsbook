@@ -1,6 +1,5 @@
 "use client";
 import Link from "./UI/Link";
-import type { MouseEventHandler } from "react";
 
 type NavItemProps = {
   active?: boolean;

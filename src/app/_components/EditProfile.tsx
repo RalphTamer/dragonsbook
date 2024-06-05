@@ -10,6 +10,7 @@ import { useUploadThing } from "~/lib/utils";
 import SVGIcon from "./UI/SVGIcon";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import ImageCropper from "./UI/ImageCropper/ImageCropper";
+import Image from "next/image";
 
 type Props = {
   userData: Omit<User, "password">;
@@ -72,13 +73,22 @@ const EditProfile = (props: Props) => {
             position: "relative",
           }}
         >
-          <img
+          <Image
             src={userImage ?? "/images/character.jpg"}
+            alt="image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            priority
             style={{
+              width: "100%",
+              height: "100%",
+              //
               borderRadius: 12,
               aspectRatio: 1,
             }}
-          ></img>
+          />
+
           <div
             onClick={() => {
               setModalOpen(true);

@@ -8,6 +8,7 @@ import { humanizePaths } from "~/lib/utils";
 import type { NextFont } from "next/dist/compiled/@next/font";
 import { NavbarPopup } from "./NavbarPopup";
 import type { Popup } from "@prisma/client";
+import Image from "next/image";
 type Props = {
   id: string;
   edgeOfTheGalaxy: NextFont;
@@ -38,7 +39,21 @@ const Navbar = (props: Props) => {
         >
           <div className="flex items-center gap-2">
             <Link href={"/"}>
-              <img src="/icons/logo.png" className="pb-3" />
+              <Image
+                className="pb-3"
+                src={"/icons/logo.png"}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                priority
+                style={{
+                  // width: "100%",
+                  height: "100%",
+                  //
+                  width: "29px",
+                }}
+              />
             </Link>
             <div
               className={`${props.edgeOfTheGalaxy.className}`}

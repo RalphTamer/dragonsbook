@@ -54,6 +54,7 @@ export const NavbarPopup = (props: Props) => {
                 style={{
                   fontSize: 12,
                   lineHeight: 1,
+                  textAlign: "center",
                 }}
               >
                 {props.month}

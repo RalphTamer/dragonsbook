@@ -6,6 +6,7 @@ import { api } from "~/trpc/react";
 import AsyncButton from "../UI/AsyncButton";
 import EditPointsPage from "./EditPointsPage";
 import EditUserSpecialBadges from "./EditUserSpecialBadges";
+import Image from "next/image";
 
 type Props = {
   userData: Omit<User, "password">;
@@ -40,12 +41,20 @@ const UserInfo = (props: Props) => {
   return (
     <div className="container my-4 space-y-2">
       <div className="flex flex-col items-center justify-center space-y-2">
-        <img
+        <Image
+          src={userData.image ?? "/images/character.jpg"}
+          alt="image"
+          width={0}
+          height={0}
+          sizes="100vw"
+          priority
           style={{
+            width: "100%",
+            height: "100%",
+            //
             maxWidth: 200,
             borderRadius: 18,
           }}
-          src={userData.image ?? "/images/character.jpg"}
         />
         <div
           style={{

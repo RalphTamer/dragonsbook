@@ -8,6 +8,7 @@ import { style } from "~/lib/styles";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import SVGIcon from "./UI/SVGIcon";
 
 const LoginForm = () => {
   const [submitErrors, setSubmitErrors] = useState<boolean>(false);
@@ -15,19 +16,28 @@ const LoginForm = () => {
   return (
     <div className="container ">
       <div
-        className="my-8"
+        className="relative my-8"
         style={{
           borderRadius: 18,
+          width: "100%",
+          height: "100%",
+          aspectRatio: 1,
         }}
       >
         <Image
+          className="absolute left-1/2 top-1/2"
           src={"/images/login-photo.png"}
           alt="image"
           width={0}
           height={0}
           sizes="100vw"
           priority
-          style={{ width: "100%", height: "100%", borderRadius: 18 }}
+          style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 18,
+            transform: "translate(-50%,-50%)",
+          }}
         />
       </div>
       <Formik
@@ -85,7 +95,11 @@ const LoginForm = () => {
                 }}
                 className="my-1 flex w-full items-center justify-center rounded-[32px] py-4 text-white"
               >
-                LOGIN
+                {isSubmitting === true ? (
+                  <SVGIcon name="loader" className="animate-spin" size={28} />
+                ) : (
+                  "LOGIN"
+                )}
               </button>
               <Link
                 style={{

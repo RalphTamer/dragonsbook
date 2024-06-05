@@ -6,6 +6,7 @@ import * as React from "react";
 import SVGIcon from "./SVGIcon";
 import { navStore } from "~/lib/store";
 import type { NextFont } from "next/dist/compiled/@next/font";
+import Image from "next/image";
 
 type Props = {
   renderElem: JSX.Element;
@@ -93,12 +94,25 @@ const NavSlider = (props: Props) => {
             zIndex: 10,
           }}
         >
-          {/* <img src="/terminators/terminatorsLogo.png" alt="" />
-           */}
           <div className="grid grid-cols-12 gap-4">
-            <img src="/icons/logo.png" className="col-span-3" />
+            <Image
+              src="/icons/logo.png"
+              className="col-span-2 pb-2"
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                aspectRatio: 1,
+                // maxWidth: 20,
+              }}
+            />
             <div
-              className={`col-span-9 ${props.edgeOfTheGalaxy.className}`}
+              className={`col-span-10 ${props.edgeOfTheGalaxy.className}`}
               style={{
                 fontSize: 26,
                 color: "white",

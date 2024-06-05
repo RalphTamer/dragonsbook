@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { formatNumber } from "~/lib/utils";
 
 type Props = {
@@ -22,15 +23,18 @@ const BadgesCard = (props: Props) => {
               transform: "translate(0,-50%)",
             }}
           >
-            <img
+            <Image
               src={props.image ?? "/images/character.jpg"}
-              alt=""
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
               style={{
-                aspectRatio: 1,
-                maxWidth: 50,
-                // width: "100%",
-
-                borderRadius: "10px",
+                width: "100%",
+                height: "100%",
+                // aspectRatio: 1,
+                maxWidth: 40,
               }}
             />
           </div>

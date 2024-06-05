@@ -4,6 +4,7 @@ import { style } from "~/lib/styles";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 const ScanQrPage = () => {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
   const router = useRouter();
@@ -51,10 +52,20 @@ const ScanQrPage = () => {
               transform: "translate(-50%,-50%)",
             }}
           >
-            <img
-              src="/icons/fire-badge.png"
-              style={{ maxWidth: "60px", width: "100%" }}
-            ></img>
+            <Image
+              src={"/icons/fire-badge.png"}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                maxWidth: "60px",
+              }}
+            />
           </div>
         </div>
         <div
@@ -71,10 +82,20 @@ const ScanQrPage = () => {
               transform: "translate(-50%,-50%)",
             }}
           >
-            <img
-              src="/icons/water-badge.png"
-              style={{ maxWidth: "60px", width: "100%" }}
-            ></img>
+            <Image
+              src={"/icons/water-badge.png"}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                maxWidth: "60px",
+              }}
+            />
           </div>
         </div>
         <div
@@ -91,10 +112,20 @@ const ScanQrPage = () => {
               transform: "translate(-50%,-50%)",
             }}
           >
-            <img
-              src="/icons/earth-badge.png"
-              style={{ maxWidth: "60px", width: "100%" }}
-            ></img>
+            <Image
+              src={"/icons/earth-badge.png"}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                maxWidth: "60px",
+              }}
+            />
           </div>
         </div>
         <div
@@ -111,10 +142,20 @@ const ScanQrPage = () => {
               transform: "translate(-50%,-50%)",
             }}
           >
-            <img
-              src="/icons/wind-badge.png"
-              style={{ maxWidth: "60px", width: "100%" }}
-            ></img>
+            <Image
+              src={"/icons/wind-badge.png"}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                maxWidth: "60px",
+              }}
+            />
           </div>
         </div>
       </div>

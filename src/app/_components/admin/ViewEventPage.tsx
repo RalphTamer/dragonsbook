@@ -4,6 +4,7 @@ import SVGIcon from "../UI/SVGIcon";
 import { style } from "~/lib/styles";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import Image from "next/image";
 
 type Props = {
   event: Event;
@@ -25,7 +26,19 @@ const ViewEventPage = (props: Props) => {
         }}
       >
         {props.event.qr != null ? (
-          <img src={props.event.qr} />
+          <Image
+            src={props.event.qr}
+            alt="image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            priority
+            style={{
+              width: "100%",
+              height: "100%",
+              //
+            }}
+          />
         ) : (
           <div>No qr image available</div>
         )}

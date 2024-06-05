@@ -8,6 +8,7 @@ import { canvasPreview } from "./canvasPreview";
 
 import "react-image-crop/dist/ReactCrop.css";
 import SVGIcon from "../SVGIcon";
+import Image from "next/image";
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -119,26 +120,26 @@ export default function ImageCropper(props: Props) {
     props.loading(false);
   }
 
-  const handleAsync = async () => {
-    if (
-      completedCrop?.width &&
-      completedCrop?.height &&
-      imgRef.current &&
-      previewCanvasRef.current
-    ) {
-      // We use canvasPreview as it's much faster than imgPreview.
-      await canvasPreview(
-        imgRef.current,
-        previewCanvasRef.current,
-        completedCrop,
-        scale,
-        rotate,
-      );
-    }
-  };
-
   // Use regular useEffect
   useEffect(() => {
+    const handleAsync = async () => {
+      if (
+        completedCrop?.width &&
+        completedCrop?.height &&
+        imgRef.current &&
+        previewCanvasRef.current
+      ) {
+        // We use canvasPreview as it's much faster than imgPreview.
+        await canvasPreview(
+          imgRef.current,
+          previewCanvasRef.current,
+          completedCrop,
+          scale,
+          rotate,
+        );
+      }
+    };
+
     // Call the asynchronous function directly
     handleAsync().catch((error) => {
       // Handle errors here if necessary
@@ -184,11 +185,20 @@ export default function ImageCropper(props: Props) {
             minHeight={100}
             // circularCrop
           >
-            <img
+            <Image
               ref={imgRef}
-              alt="Crop me"
               src={imgSrc}
-              style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: "100%",
+                height: "100%",
+                //
+                transform: `scale(${scale}) rotate(${rotate}deg)`,
+              }}
               onLoad={onImageLoad}
             />
           </ReactCrop>

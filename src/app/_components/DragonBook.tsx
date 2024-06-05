@@ -9,6 +9,7 @@ import BadgesTypeSelector from "./BadgesTypeSelector";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
 import { formatNumber } from "~/lib/utils";
+import Image from "next/image";
 
 export type DragonBookUser = Omit<User, "password"> & {
   UserAcquiredSpecialBadge: ({
@@ -76,12 +77,20 @@ const DragonBook = (props: Props) => {
               )
             )}
             <div className="w-[35%]">
-              <img
+              <Image
                 src={userData.image ?? "/images/character.jpg"}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                priority
                 style={{
+                  width: "100%",
+                  height: "100%",
+                  //
                   borderRadius: 12,
                 }}
-              ></img>
+              />
             </div>
             <div className="flex w-[65%] flex-col justify-between">
               <div style={{ lineHeight: 1 }}>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { formatNumber } from "~/lib/utils";
 
@@ -22,10 +23,17 @@ const LeaderboardCard = (props: Props) => {
       >
         <div className="flex w-[70%] space-x-2 py-4 pl-4">
           <div className="w-[25%] ">
-            <img
+            <Image
               src={props.image ?? "/images/character.jpg"}
-              alt=""
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
               style={{
+                width: "100%",
+                height: "100%",
+                //
                 aspectRatio: 1,
                 borderRadius: "10px",
               }}

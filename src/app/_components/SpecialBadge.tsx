@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { style } from "~/lib/styles";
 type Props = {
   badge: {
@@ -18,13 +19,20 @@ const SpecialBadge = (props: Props) => {
       }}
     >
       <div className="w-[25%]">
-        <img
+        <Image
+          src={image}
+          alt="image"
+          width={0}
+          height={0}
+          sizes="100vw"
+          priority
           style={{
+            width: "100%",
+            height: "100%",
+            //
             aspectRatio: 1,
             borderRadius: "50%",
           }}
-          src={image}
-          alt=""
         />
       </div>
       <div className="flex w-[66%] flex-col justify-between">

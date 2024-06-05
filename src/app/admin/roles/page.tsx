@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import PopupPage from "~/app/_components/admin/PopupPage";
 import type { NewSession } from "~/lib/types";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";

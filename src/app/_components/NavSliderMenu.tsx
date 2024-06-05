@@ -2,7 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import NavItem from "./NavItem";
-import SlideoutMenu from "./UI/NavSlider";
+import NavSlider from "./UI/NavSlider";
 import type { NextFont } from "next/dist/compiled/@next/font";
 type Props = {
   id: string;
@@ -13,7 +13,7 @@ const NavSliderMenu = (props: Props) => {
   const { pathname } = props;
 
   return (
-    <SlideoutMenu
+    <NavSlider
       edgeOfTheGalaxy={props.edgeOfTheGalaxy}
       xColor="#fff"
       renderElem={

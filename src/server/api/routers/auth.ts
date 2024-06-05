@@ -18,14 +18,17 @@ export const authRouter = createTRPCRouter({
         address: z.string().optional(),
       }),
     )
-    .mutation(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }) => {
       const emailExists = await ctx.db.user.findFirst({
         where: {
           email: input.email,
         },
       });
       if (emailExists != null) {
-        throw new Error("Email already exist");
+        return {
+          success: false,
+          message: "Email already registered",
+        };
       }
       const usernameExists = await ctx.db.user.findFirst({
         where: {
@@ -33,12 +36,15 @@ export const authRouter = createTRPCRouter({
         },
       });
       if (usernameExists != null) {
-        throw new Error("username already exist");
+        return {
+          success: false,
+          message: "Username is taken",
+        };
       }
       const hashedPassword = await hashPassword({
         plaintextPassword: input.password,
       });
-      const user = await ctx.db.user.create({
+      await ctx.db.user.create({
         data: {
           email: input.email,
           role: "USER",
@@ -62,9 +68,8 @@ export const authRouter = createTRPCRouter({
       });
 
       return {
-        message: "user signup success",
-        user,
-        code: 201,
+        success: true,
+        message: "User signup success",
       };
     }),
   forgotPasswordSendEmail: publicProcedure

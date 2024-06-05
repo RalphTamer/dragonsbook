@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import type { NextFont } from "next/dist/compiled/@next/font";
 import Navbar from "./Navbar";
 import { api } from "~/trpc/server";
-import { NewSession } from "~/lib/types";
 
 type Props = {
   children: ReactNode;

@@ -2,7 +2,7 @@
 import { Form, Formik } from "formik";
 import { editProfileSchema } from "~/schema";
 import CustomInput from "./UI/CustomInput";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { api } from "~/trpc/react";
 import SVGIcon from "./UI/SVGIcon";
 type Props = {

@@ -5,6 +5,7 @@ import { style } from "~/lib/styles";
 import { api } from "~/trpc/react";
 import SVGIcon from "../UI/SVGIcon";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   allEvents: { allEvents: Event[]; allEventsCount: number };
@@ -35,13 +36,22 @@ const ViewEventsTab = (props: Props) => {
             key={event.id}
             className="my-4 flex gap-4"
           >
-            <img
+            <Image
+              src={`/icons/${event.type.toLowerCase()}-badge.png`}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
               style={{
+                width: "100%",
+                height: "100%",
+                //
                 aspectRatio: 1,
                 maxWidth: 50,
               }}
-              src={`/icons/${event.type.toLowerCase()}-badge.png`}
-            ></img>
+            />
+
             <div>
               <div>
                 <span style={{ fontWeight: "bold" }}>Name :</span> {event.name}

@@ -6,8 +6,14 @@ import { signupFormSchema } from "~/schema";
 import { api } from "~/trpc/react";
 import Link from "next/link";
 import { style } from "~/lib/styles";
+import SVGIcon from "./UI/SVGIcon";
+import { useState } from "react";
 
 const SignupForm = () => {
+  const [message, setMessage] = useState<{
+    type: "error" | "success";
+    payload: string;
+  } | null>(null);
   return (
     <div className="container mx-auto  my-8 md:px-[140px]">
       <Formik
@@ -24,7 +30,7 @@ const SignupForm = () => {
         }}
         validationSchema={signupFormSchema}
         onSubmit={async (values, actions) => {
-          await api.auth.userSignup.mutate({
+          const res = await api.auth.userSignup.query({
             email: values.email,
             password: values.password,
             username: values.username,
@@ -34,8 +40,14 @@ const SignupForm = () => {
             address: values.address,
             instagramHandle: values.instagramHandle,
           });
+          setMessage({
+            payload: res.message,
+            type: res.success === true ? "success" : "error",
+          });
           // //   TODO : handle errors
-          actions.resetForm();
+          if (res.success === true) {
+            actions.resetForm();
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -87,14 +99,36 @@ const SignupForm = () => {
                 type="password"
                 placeholder="Confirm your Password"
               />
-
+              {message != null && (
+                <div
+                  className="text-center"
+                  style={{
+                    fontWeight: 500,
+                    color:
+                      message.type === "success"
+                        ? style.color.earthGreen
+                        : style.color.fireRed,
+                  }}
+                >
+                  {message.payload}
+                </div>
+              )}
               <button
                 disabled={isSubmitting}
                 type="submit"
                 style={{}}
-                className="rounded-[32px] bg-red-600 py-4 text-white"
+                className="flex items-center justify-center rounded-[32px] bg-red-600 py-4 text-white"
               >
-                SIGN UP
+                {isSubmitting === true ? (
+                  <SVGIcon
+                    name="loader"
+                    className="animate-spin"
+                    color="white"
+                    size={28}
+                  />
+                ) : (
+                  "SIGN UP"
+                )}
               </button>
             </div>
           </Form>
