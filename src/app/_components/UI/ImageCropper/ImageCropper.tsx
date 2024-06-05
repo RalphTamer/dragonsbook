@@ -140,7 +140,10 @@ export default function ImageCropper(props: Props) {
   // Use regular useEffect
   useEffect(() => {
     // Call the asynchronous function directly
-    handleAsync();
+    handleAsync().catch((error) => {
+      // Handle errors here if necessary
+      console.error("Error occurred:", error);
+    });
   }, [completedCrop, scale, rotate]);
   return (
     <div className="App space-y-2">
