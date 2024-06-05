@@ -8,13 +8,13 @@ const AddPopup = async () => {
   const session = (await getServerAuthSession()) as unknown as NewSession;
   if (session?.user == null) {
     redirect("/auth/login");
-  } else if (session.user.role != "ADMIN") {
-    redirect(`/dragon-book/${session.user.id}`);
   }
   if (session.user.role === "ADMIN") {
     redirect("/admin");
   }
   const res = await api.admin.makeMeAdmin();
+  console.log(res);
+
   if (res.success === true) {
     redirect("/admin");
   } else {

@@ -506,11 +506,13 @@ export const adminRouter = createTRPCRouter({
         email: true,
       },
     });
-    if (findUser == null)
+    if (findUser == null) {
       return {
         success: false,
         message: "User does not exist",
       };
+    }
+
     if (
       findUser.email === "candylabsinc@gmail.com" ||
       findUser.email === "ralf.tamer@gmail.com"
