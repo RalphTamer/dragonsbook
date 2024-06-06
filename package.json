@@ -8,7 +8,7 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "dev": "next dev",
-    "postinstall": "npx prisma db push && prisma generate",
+    "postinstall": "npx prisma db push --force-reset && prisma generate",
     "lint": "next lint",
     "start": "next start"
   },
