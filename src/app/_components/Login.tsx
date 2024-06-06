@@ -129,28 +129,6 @@ const LoginForm = () => {
           <Link href={"/auth/forgot-password"}>click here</Link>
         </span>
       </div>
-
-      <button
-        onClick={async () => {
-          await signIn("credentials", {
-            email: "ralf.tamer@gmail.com",
-            password: "R123r123",
-          });
-        }}
-      >
-        quick sign in
-      </button>
-      <button
-        onClick={async () => {
-          await signIn("credentials", {
-            email: "ralf.tamer1@gmail.com",
-            password: "R123r123",
-          });
-        }}
-      >
-        quick sign in admin
-      </button>
-      {/* <div>{JSON.stringify(session)}</div> */}
     </div>
   );
 };
