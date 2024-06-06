@@ -5,12 +5,13 @@ import { style } from "~/lib/styles";
 import { useState } from "react";
 import { api } from "~/trpc/react";
 import Image from "next/image";
+import AsyncButton from "../UI/AsyncButton";
 
 type Props = {
   event: Event;
 };
 const ViewEventPage = (props: Props) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isActive, setisActive] = useState<boolean>(props.event.active);
   return (
     <div className="container">
       <div
@@ -46,36 +47,43 @@ const ViewEventPage = (props: Props) => {
       </div>
       <div>Type: {props.event.type} </div>
       <div>Will add: {props.event.pointsAdded} points</div>
-      <div className="flex justify-center">
-        <button
-          disabled={isLoading === true}
-          className={` px-4 py-2 text-center  text-white`}
+      <div className="space-y-4">
+        <AsyncButton
+          buttonText={isActive === true ? "DISABLE EVENT" : "ENABLE EVENT"}
+          onClick={async () => {
+            await api.admin.toggleActiveEvent.query({
+              active: isActive === true ? false : true,
+              eventId: props.event.id,
+            });
+            setisActive(isActive === true ? false : true);
+          }}
           style={{
             borderRadius: 12,
             background: style.color.fireRed,
           }}
+          className={` px-4 py-2 text-center  text-white`}
+        />
+        <AsyncButton
+          buttonText="DELETE EVENT"
           onClick={async () => {
             if (
               window.confirm("are you sure you want to delete the events?") ===
               true
             ) {
-              setIsLoading(true);
               await api.admin.deleteEvent.query({
                 id: props.event.id,
               });
               if (typeof window != null) {
                 window.location.href = "/admin/events";
               }
-              setIsLoading(false);
             }
           }}
-        >
-          {isLoading === true ? (
-            <SVGIcon name="loader" className="animate-spin" color="white" />
-          ) : (
-            "Delete Event"
-          )}
-        </button>
+          style={{
+            borderRadius: 12,
+            background: style.color.fireRed,
+          }}
+          className={` px-4 py-2 text-center  text-white`}
+        />
       </div>
     </div>
   );

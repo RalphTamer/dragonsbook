@@ -20,6 +20,8 @@ export function humanizePaths(path: string) {
     return "ADMIN";
   } else if (path.startsWith("/redeem")) {
     return "POINTS CLAIMED";
+  } else if (path.startsWith("/change-password")) {
+    return "CHANGE PASSWORD";
   } else {
     return "ERROR";
   }

@@ -215,7 +215,11 @@ export const adminRouter = createTRPCRouter({
     z.object({
       qr: z.string().url().nullable(),
       name: z.string(),
-      type: z.string(),
+      type: z
+        .literal("FIRE")
+        .or(z.literal("WATER"))
+        .or(z.literal("WIND"))
+        .or(z.literal("EARTH")),
       pointsAdded: z.number(),
     }),
   ).query(async ({ input, ctx }) => {
@@ -533,6 +537,25 @@ export const adminRouter = createTRPCRouter({
     return {
       success: false,
       message: "UNAUTHORIZED",
+    };
+  }),
+  toggleActiveEvent: AdminProtectedProcedure.input(
+    z.object({
+      active: z.boolean(),
+      eventId: z.string(),
+    }),
+  ).query(async ({ input, ctx }) => {
+    const event = await ctx.db.event.update({
+      where: {
+        id: input.eventId,
+      },
+      data: {
+        active: input.active,
+      },
+    });
+
+    return {
+      success: true,
     };
   }),
 });

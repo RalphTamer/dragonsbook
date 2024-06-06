@@ -8,6 +8,7 @@ type Props = {
   style: React.CSSProperties;
   onClick: () => Promise<void>;
   buttonText: string;
+  className?: string;
 };
 const AsyncButton = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,7 +16,7 @@ const AsyncButton = (props: Props) => {
     <div className="flex justify-center">
       <button
         disabled={props.disabled ?? isLoading === true}
-        className={` px-4 py-2 text-center  text-white`}
+        className={` px-4 py-2 text-center  text-white ${props.className}`}
         style={{
           ...props.style,
         }}

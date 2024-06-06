@@ -59,5 +59,13 @@ export const addSpecialBadgeSchema = yup.object().shape({
 export const generateEventSchema = yup.object().shape({
   name: yup.string().required(),
   pointsToAdd: yup.number().required(),
-  type: yup.string().required(),
+  type: yup.mixed().oneOf(["FIRE", "WATER", "WIND", "EARTH"]).required(),
+});
+export const changePasswordSchema = yup.object().shape({
+  oldPassword: yup.string().min(6).required("Required"),
+  newPassword: yup.string().min(6).required("Required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword")], "Passwords must match")
+    .required("Required"),
 });

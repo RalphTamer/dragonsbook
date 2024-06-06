@@ -11,6 +11,7 @@ import SVGIcon from "./UI/SVGIcon";
 import BottomSlideModal from "./UI/BottomSlideModal";
 import ImageCropper from "./UI/ImageCropper/ImageCropper";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   userData: Omit<User, "password">;
@@ -117,6 +118,18 @@ const EditProfile = (props: Props) => {
         }}
       >
         CANCEL
+      </div>
+      <div className="mt-8 flex justify-center">
+        <Link
+          href="/change-password"
+          style={{
+            color: style.color.waterBlue,
+            fontWeight: "bold",
+            fontSize: 18,
+          }}
+        >
+          Change password
+        </Link>
       </div>
       <BottomSlideModal
         isOpen={modalOpen}

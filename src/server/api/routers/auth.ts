@@ -1,6 +1,14 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { hashPassword, sendEmail } from "~/server/services/auth.service";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
+import {
+  comparePasswordToHash,
+  hashPassword,
+  sendEmail,
+} from "~/server/services/auth.service";
 
 // TODO change this
 export const authRouter = createTRPCRouter({
@@ -166,6 +174,61 @@ export const authRouter = createTRPCRouter({
       return {
         ok: true,
         message: "reset complete",
+      };
+    }),
+  changePassword: protectedProcedure
+    .input(
+      z.object({
+        oldPassword: z.string(),
+        newPassword: z.string(),
+        confirmPassword: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      if (input.newPassword !== input.confirmPassword) {
+        return {
+          success: false,
+          message: "Your new Password does not match the confirmation password",
+        };
+      }
+      const userPassword = await ctx.db.user.findFirst({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          password: true,
+        },
+      });
+      if (userPassword == null) {
+        return {
+          success: false,
+          message: "User does not exist",
+        };
+      }
+      const CompareUserOldPasswordtpInput = await comparePasswordToHash({
+        hash: userPassword.password,
+        plaintextPassword: input.oldPassword,
+      });
+      if (CompareUserOldPasswordtpInput.isEqual === false) {
+        return {
+          success: false,
+          message: "your old password was entered incorrectly",
+        };
+      }
+      const newPasswordHashed = await hashPassword({
+        plaintextPassword: input.newPassword,
+      });
+      await ctx.db.user.update({
+        data: {
+          password: newPasswordHashed,
+        },
+        where: {
+          id: ctx.session.user.id,
+        },
+      });
+      return {
+        success: true,
+        message: "Your password has been updated!",
       };
     }),
 });

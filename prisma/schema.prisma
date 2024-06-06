@@ -37,12 +37,20 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum EventTypes {
+    FIRE
+    WATER
+    WIND
+    EARTH
+}
+
 model Event {
     id             String           @id @default(cuid())
-    type           String
+    type           EventTypes
     name           String
     qr             String?
     pointsAdded    Int
+    active         Boolean          @default(true)
     createdAt      DateTime         @default(now())
     UserAttendance UserAttendance[]
 }
@@ -67,11 +75,16 @@ model UserAttendance {
     createdAt     DateTime @default(now())
 }
 
+enum Roles {
+    ADMIN
+    USER
+}
+
 model User {
     id                       String                     @id @default(cuid())
     username                 String                     @unique
     email                    String                     @unique
-    role                     String
+    role                     Roles
     password                 String
     image                    String?
     fullname                 String

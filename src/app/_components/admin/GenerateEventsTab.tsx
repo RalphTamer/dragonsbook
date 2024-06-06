@@ -47,6 +47,18 @@ const GenerateEventsTab = () => {
             setIsLoading(false);
             return;
           }
+          if (
+            values.type !== "FIRE" &&
+            values.type !== "WATER" &&
+            values.type !== "EARTH" &&
+            values.type !== "WIND"
+          ) {
+            setMessage({
+              type: "error",
+              payload: "type error , type value is not acceptable",
+            });
+            return;
+          }
           const res = await api.admin.generateEvent.query({
             name: values.name,
             pointsAdded: parseInt(values.pointsToAdd),

@@ -44,8 +44,6 @@ const LoginForm = () => {
         initialValues={{ email: "", password: "" }}
         validationSchema={forgotPasswordFormSchema}
         onSubmit={async (values) => {
-          // Todo : handle errors
-
           await signIn("credentials", {
             email: values.email,
             password: values.password,
@@ -96,7 +94,12 @@ const LoginForm = () => {
                 className="my-1 flex w-full items-center justify-center rounded-[32px] py-4 text-white"
               >
                 {isSubmitting === true ? (
-                  <SVGIcon name="loader" className="animate-spin" size={28} />
+                  <SVGIcon
+                    name="loader"
+                    className="animate-spin"
+                    color="white"
+                    size={28}
+                  />
                 ) : (
                   "LOGIN"
                 )}
