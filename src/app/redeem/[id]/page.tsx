@@ -29,23 +29,29 @@ const Redeem = async (props: { params: { id: string } }) => {
       >
         <div>
           {redeem.success === true ? (
-            <Image
-              src={src || "/images/character.jpg"}
-              alt="image"
-              width={0}
-              height={0}
-              sizes="100vw"
-              priority
+            <div
+              className="absolute"
               style={{
-                width: "100%",
-                height: "100%",
-                //
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%,-50%)",
-                maxWidth: "20vw",
               }}
-            />
+            >
+              <Image
+                src={src || "/images/character.jpg"}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                priority
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  //
+                  maxWidth: "20vw",
+                }}
+              />
+            </div>
           ) : (
             <div
               className="absolute"

@@ -158,6 +158,7 @@ export const adminRouter = createTRPCRouter({
     }),
   ).query(async ({ input, ctx }) => {
     const previousPopup = await ctx.db.popup.findFirst();
+
     try {
       if (previousPopup != null) {
         await ctx.db.popup.delete({
@@ -165,7 +166,9 @@ export const adminRouter = createTRPCRouter({
             id: previousPopup.id,
           },
         });
-        await ctx.db.popup.create({
+      }
+      await ctx.db.popup
+        .create({
           data: {
             content: input.content,
             day: input.day,
@@ -173,8 +176,8 @@ export const adminRouter = createTRPCRouter({
             title: input.title,
             link: input.link,
           },
-        });
-      }
+        })
+        .catch((e) => console.log(e));
       return {
         success: true,
         message: "Popup creation success",

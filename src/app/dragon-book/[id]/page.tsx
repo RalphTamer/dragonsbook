@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import {  getServerAuthSession } from "~/server/auth";
+import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import DragonBook from "../../_components/DragonBook";
 import localFont from "next/font/local";
@@ -16,7 +16,6 @@ const Profile = async (props: {
   if (session?.user == null) {
     redirect("/auth/login");
   }
-
   const userData = await api.user
     .getUserById({
       id: props.params.id,

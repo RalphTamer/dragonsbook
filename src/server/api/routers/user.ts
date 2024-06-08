@@ -307,6 +307,13 @@ export const userRouter = createTRPCRouter({
           message: "Sorry, This event no longer exists",
         };
       }
+      if (event.active === false) {
+        return {
+          success: false,
+          userId: ctx.session.user.id,
+          message: "Sorry, this event is no longer active",
+        };
+      }
 
       const didUserAttend = await ctx.db.userAttendance.findFirst({
         where: {

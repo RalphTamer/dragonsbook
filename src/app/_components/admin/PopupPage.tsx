@@ -35,7 +35,12 @@ const PopupPage = () => {
         onSubmit={async (values) => {
           const res = await api.admin.AddPopup.query({
             content: values.content,
-            day: isNaN(parseInt(values.day)) ? 1 : parseInt(values.day),
+            day:
+              typeof values.day === "string"
+                ? parseInt(values.day)
+                : typeof values.day === "number"
+                  ? values.day
+                  : 23,
             link: values.link,
             month: values.month,
             title: values.title,
