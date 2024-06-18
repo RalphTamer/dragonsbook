@@ -1,6 +1,5 @@
 "use client";
 import type { Event } from "@prisma/client";
-import SVGIcon from "../UI/SVGIcon";
 import { style } from "~/lib/styles";
 import { useState } from "react";
 import { api } from "~/trpc/react";
