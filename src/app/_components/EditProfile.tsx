@@ -38,7 +38,7 @@ const EditProfile = (props: Props) => {
         }}
       >
         <div className="flex w-[70%] flex-col justify-between">
-          <div style={{ lineHeight: 1 }}>
+          <div style={{ lineHeight: 1.2 }}>
             <div className="text-[18px] font-bold">{userData.title}</div>
             <div
               style={{

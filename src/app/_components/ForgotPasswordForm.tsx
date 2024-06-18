@@ -14,7 +14,7 @@ const ForgotPasswordForm = () => {
   } | null>(null);
 
   return (
-    <div className="container">
+    <div className="container mt-12">
       <Formik
         initialValues={{ email: "" }}
         validationSchema={forgotPasswordFormSchema}
@@ -50,9 +50,7 @@ const ForgotPasswordForm = () => {
                   style={{
                     fontWeight: 500,
                     color:
-                      message.type === "success"
-                        ? style.color.earthGreen
-                        : style.color.fireRed,
+                      message.type === "success" ? "#000" : style.color.fireRed,
                   }}
                 >
                   {message.payload}

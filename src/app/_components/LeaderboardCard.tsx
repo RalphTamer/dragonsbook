@@ -43,7 +43,7 @@ const LeaderboardCard = (props: Props) => {
             style={{ fontSize: 10 }}
             className="flex flex-col justify-between"
           >
-            <div style={{ lineHeight: 1 }}>
+            <div style={{ lineHeight: 1.2 }}>
               <div style={{ fontSize: 14, fontWeight: "bold" }}>
                 {props.username}
               </div>
@@ -58,6 +58,7 @@ const LeaderboardCard = (props: Props) => {
           className={`absolute right-0 top-1/2 flex h-full items-center  justify-center  px-6`}
           style={{
             aspectRatio: 1,
+            maxWidth: "fit-content",
             background: props.squareBgColor,
             textAlign: "center",
             transform: "translate(0,-50%)",

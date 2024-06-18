@@ -8,12 +8,14 @@ import Link from "next/link";
 import { style } from "~/lib/styles";
 import SVGIcon from "./UI/SVGIcon";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
   const [message, setMessage] = useState<{
     type: "error" | "success";
     payload: string;
   } | null>(null);
+  const router = useRouter();
   return (
     <div className="container mx-auto  my-8 md:px-[140px]">
       <Formik
@@ -44,9 +46,9 @@ const SignupForm = () => {
             payload: res.message,
             type: res.success === true ? "success" : "error",
           });
-          // //   TODO : handle errors
           if (res.success === true) {
             actions.resetForm();
+            router.push("/auth/login");
           }
         }}
       >

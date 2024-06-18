@@ -20,13 +20,38 @@ export const authRouter = createTRPCRouter({
         username: z.string(),
         fullname: z.string(),
         dateOfBirth: z.date(),
-
         phoneNumber: z.string(),
         instagramHandle: z.string().optional(),
         address: z.string().optional(),
       }),
     )
     .query(async ({ input, ctx }) => {
+      let instagramHandle = input.instagramHandle;
+      if (instagramHandle?.trim() === "") {
+        instagramHandle = undefined;
+      }
+      if (instagramHandle != null) {
+        if (instagramHandle.startsWith("@")) {
+          instagramHandle = instagramHandle.substring(1);
+        } else {
+          return {
+            success: false,
+            message: "Instagram handle must starts with @",
+          };
+        }
+      }
+      if (input.username.length > 12) {
+        return {
+          success: false,
+          message: "Username must be less than 12 characters",
+        };
+      }
+      if (input.username.length < 3) {
+        return {
+          success: false,
+          message: "Username must be more than 3 characters",
+        };
+      }
       const emailExists = await ctx.db.user.findFirst({
         where: {
           email: input.email,
@@ -62,9 +87,7 @@ export const authRouter = createTRPCRouter({
           dateOfBirth: input.dateOfBirth,
           fullname: input.fullname,
           instagramHandle:
-            input.instagramHandle?.trim() === ""
-              ? undefined
-              : input.instagramHandle,
+            instagramHandle?.trim() === "" ? undefined : instagramHandle,
           phoneNumber: input.phoneNumber,
           windPoints: 0,
           earthPoints: 0,

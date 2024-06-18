@@ -40,7 +40,7 @@ const BadgesCard = (props: Props) => {
           </div>
         </div>
         <div style={{ fontSize: 10 }} className="flex flex-col justify-between">
-          <div style={{ lineHeight: 1 }}>
+          <div style={{ lineHeight: 1.2 }}>
             <div style={{ fontSize: 14, fontWeight: 500, color: "white" }}>
               {props.badgeName}
             </div>
@@ -57,6 +57,7 @@ const BadgesCard = (props: Props) => {
         className={`absolute right-0 top-1/2 flex h-full items-center  justify-center  px-6`}
         style={{
           aspectRatio: 1,
+          maxWidth: "fit-content",
           background: props.color,
           textAlign: "center",
           transform: "translate(0,-50%)",
@@ -67,13 +68,12 @@ const BadgesCard = (props: Props) => {
           <div
             className="absolute left-1/2 top-1/2 flex flex-col"
             style={{
-              lineHeight: 1,
+              lineHeight: 1.2,
               color: "#000",
               fontSize: 16,
               transform: "translate(-50%,-50%)",
             }}
           >
-            {/* TODO handle if more than 1000 make 1k */}
             <div style={{ fontWeight: "bolder" }}>
               {formatNumber(props.points)}
             </div>

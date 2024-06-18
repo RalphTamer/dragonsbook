@@ -53,7 +53,7 @@ export const NavbarPopup = (props: Props) => {
               <div
                 style={{
                   fontSize: 12,
-                  lineHeight: 1,
+                  lineHeight: 1.2,
                   textAlign: "center",
                 }}
               >

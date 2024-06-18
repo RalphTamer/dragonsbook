@@ -81,7 +81,11 @@ const NavSliderMenu = (props: Props) => {
               text="SCAN QR"
             />
 
-            <NavItem active={pathname === "/"} href="/" text="CAMP49" />
+            <NavItem
+              active={false}
+              href="https://www.camp49.com/theapp"
+              text="CAMP49"
+            />
             <NavItem
               text="LOGOUT"
               onClick={async () => {

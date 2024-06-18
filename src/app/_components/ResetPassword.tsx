@@ -19,7 +19,7 @@ const ResetPassword = (props: Props) => {
     payload: string;
   } | null>(null);
   return (
-    <div className="container">
+    <div className="container mt-12">
       <Formik
         initialValues={{ password: "", confirmPassword: "" }}
         validationSchema={editProfileSchema}
@@ -62,9 +62,7 @@ const ResetPassword = (props: Props) => {
                   style={{
                     fontWeight: 500,
                     color:
-                      message.type === "success"
-                        ? style.color.earthGreen
-                        : style.color.fireRed,
+                      message.type === "success" ? "#000" : style.color.fireRed,
                   }}
                 >
                   {message.payload}

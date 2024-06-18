@@ -93,8 +93,8 @@ const DragonBook = (props: Props) => {
               />
             </div>
             <div className="flex w-[65%] flex-col justify-between">
-              <div style={{ lineHeight: 1 }}>
-                <div className="text-[18px] font-bold">{userData.fullname}</div>
+              <div style={{ lineHeight: 1.2 }}>
+                <div className="text-[18px] font-bold">{userData.username}</div>
                 <div
                   style={{
                     color: style.color.fireRed,
@@ -114,12 +114,12 @@ const DragonBook = (props: Props) => {
                 <div>
                   <div>Title:</div>
                   <div>Total Pts:</div>
-                  <div>Username:</div>
+                  <div>Name:</div>
                 </div>
                 <div>
                   <div>{userData.title}</div>
                   <div>{formatNumber(userData.totalPoints) ?? 0}</div>
-                  <div>{userData.username}</div>
+                  <div>{userData.fullname}</div>
                 </div>
               </div>
             </div>

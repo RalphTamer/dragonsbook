@@ -6,7 +6,11 @@ import * as yup from "yup";
 
 export const signupFormSchema = yup.object().shape({
   email: yup.string().email("Please enter a valid email").required("Required"),
-  username: yup.string().min(3, "minimun 3 characters").required("Required"),
+  username: yup
+    .string()
+    .min(3, "minimun 3 characters")
+    .required("Required")
+    .max(12, "maximum 12 characters"),
   fullname: yup.string().required("Required"),
   dateOfBirth: yup.date().required("Required"),
   phoneNumber: yup.number().min(8).required("required"),
