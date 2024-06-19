@@ -9,7 +9,7 @@ import Layout from "./_components/Layout";
 import { getServerAuthSession } from "~/server/auth";
 import SessionProviderWrapper from "./_components/SessionProviderWrapper";
 import { style } from "~/lib/styles";
-
+import "react-datepicker/dist/react-datepicker.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",

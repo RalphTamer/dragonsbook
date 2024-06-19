@@ -40,7 +40,7 @@ const EditProfileForm = (props: Props) => {
           }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <div className="flex flex-col space-y-2">
               <CustomInput
@@ -49,9 +49,13 @@ const EditProfileForm = (props: Props) => {
                 placeholder="Full Name"
               />
               <CustomInput
-                name="DateOfBirth"
+                name="dateOfBirth"
                 type="date"
                 placeholder="Date Of Birth"
+                isDate={true}
+                setDateFieldValue={async (value) => {
+                  await setFieldValue("dateOfBirth", value);
+                }}
               />
               <CustomInput name="email" type="email" placeholder="Email" />
               <CustomInput
@@ -65,11 +69,7 @@ const EditProfileForm = (props: Props) => {
                 placeholder="Instagram Handle"
               />
               <CustomInput name="address" type="text" placeholder="Address" />
-              {/* <CustomInput
-                name="password"
-                type="password"
-                placeholder="Password"
-              /> */}
+
               <button
                 disabled={isSubmitting}
                 type="submit"

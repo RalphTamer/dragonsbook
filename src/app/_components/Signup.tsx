@@ -16,6 +16,7 @@ const SignupForm = () => {
     payload: string;
   } | null>(null);
   const router = useRouter();
+
   return (
     <div className="container mx-auto  my-8 md:px-[140px]">
       <Formik
@@ -52,7 +53,7 @@ const SignupForm = () => {
           }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <div className="flex flex-col space-y-2">
               <CustomInput
@@ -64,7 +65,12 @@ const SignupForm = () => {
                 name="dateOfBirth"
                 type="date"
                 placeholder="Date Of Birth"
+                isDate={true}
+                setDateFieldValue={async (value) => {
+                  await setFieldValue("dateOfBirth", value);
+                }}
               />
+
               {/* <input name="dateOfBirth" type="date" /> */}
               <CustomInput
                 name="username"

@@ -28,3 +28,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
  
   filter: invert(1);
 }
+
+.date_picker {
+  background-color: black;
+  outline: none;
+}

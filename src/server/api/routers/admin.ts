@@ -548,7 +548,7 @@ export const adminRouter = createTRPCRouter({
       eventId: z.string(),
     }),
   ).query(async ({ input, ctx }) => {
-    const event = await ctx.db.event.update({
+    await ctx.db.event.update({
       where: {
         id: input.eventId,
       },

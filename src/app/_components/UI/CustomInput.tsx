@@ -1,9 +1,17 @@
+"use client";
+import * as DateFns from "date-fns";
 import { useField } from "formik";
+import { useRef, useState } from "react";
 import { style } from "~/lib/styles";
+import DatePicker from "react-datepicker";
+import _ from "lodash";
+
 type Props = {
   name: string;
   type: string;
   placeholder: string;
+  isDate?: boolean;
+  setDateFieldValue?: (value: Date) => void;
 };
 const CustomInput = (props: Props) => {
   const { name, type, placeholder } = props;
@@ -13,7 +21,25 @@ const CustomInput = (props: Props) => {
     type,
     placeholder,
   });
+  const [date, setDate] = useState<Date | null>(
+    field.name === "dateOfBirth" && field.value != "" ? field.value : null,
+  );
 
+  const years = _.range(1990, new Date().getFullYear() + 1, 1);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   return (
     <div>
       <div
@@ -25,20 +51,92 @@ const CustomInput = (props: Props) => {
           borderRadius: "32px",
         }}
       >
-        <input
-          style={{
-            background: "unset",
-            outline: "none",
-            width: "80%",
-          }}
-          {...field}
-          {...props}
-          className={
-            meta.touched && meta.error != null
-              ? "input-error px-4 py-3"
-              : "px-4 py-3"
-          }
-        />
+        {props.isDate != true ? (
+          <input
+            style={{
+              background: "unset",
+              outline: "none",
+              width: "80%",
+            }}
+            {...field}
+            {...props}
+            className={
+              meta.touched && meta.error != null
+                ? "input-error px-4 py-3"
+                : "px-4 py-3"
+            }
+          />
+        ) : (
+          <>
+            <div
+              className="px-4 py-3"
+              style={{
+                color: "#a9a9a9",
+                fontWeight: 500,
+              }}
+            >
+              <DatePicker
+                maxDate={new Date()}
+                renderCustomHeader={({ date, changeYear, changeMonth }) => (
+                  <div
+                    style={{
+                      margin: 10,
+                      display: "flex",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <select
+                      className="px-2 py-2"
+                      style={{
+                        borderRadius: 12,
+                      }}
+                      value={date.getFullYear()}
+                      onChange={({ target: { value } }) =>
+                        changeYear(parseInt(value))
+                      }
+                    >
+                      {years.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select
+                      className="px-2 py-2"
+                      style={{
+                        borderRadius: 12,
+                      }}
+                      value={months[date.getMonth()]}
+                      onChange={({ target: { value } }) =>
+                        changeMonth(months.indexOf(value))
+                      }
+                    >
+                      {months.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                className="date_picker"
+                value={
+                  date != null
+                    ? `${DateFns.format(date, "d MMMM y")}`
+                    : "Birth Date"
+                }
+                selected={date}
+                onChange={(date) => {
+                  setDate(date);
+                  if (date != null && props.setDateFieldValue != null) {
+                    props.setDateFieldValue(date);
+                  }
+                }}
+              />
+            </div>
+          </>
+        )}
         <div
           className="flex items-center"
           style={{
