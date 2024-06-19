@@ -1,7 +1,8 @@
 "use client";
+
 import * as DateFns from "date-fns";
 import { useField } from "formik";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { style } from "~/lib/styles";
 import DatePicker from "react-datepicker";
 import _ from "lodash";
@@ -21,11 +22,13 @@ const CustomInput = (props: Props) => {
     type,
     placeholder,
   });
+  /* eslint-disable @typescript-eslint/no-unsafe-argument */
   const [date, setDate] = useState<Date | null>(
     field.name === "dateOfBirth" && field.value != "" ? field.value : null,
   );
+  /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
-  const years = _.range(1990, new Date().getFullYear() + 1, 1);
+  const years = _.range(1940, new Date().getFullYear() + 1, 1);
   const months = [
     "January",
     "February",
