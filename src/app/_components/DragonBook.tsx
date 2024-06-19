@@ -89,6 +89,7 @@ const DragonBook = (props: Props) => {
                   height: "100%",
                   //
                   borderRadius: 12,
+                  aspectRatio: 1,
                 }}
               />
             </div>
