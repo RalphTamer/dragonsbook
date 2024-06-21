@@ -86,7 +86,7 @@ model User {
     email                    String                     @unique
     role                     Roles
     password                 String
-    verified                 Boolean?                   @default(false)
+    verified                 Boolean                    @default(false)
     image                    String?
     fullname                 String
     dateOfBirth              DateTime
