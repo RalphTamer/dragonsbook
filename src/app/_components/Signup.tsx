@@ -161,8 +161,8 @@ const SignupForm = () => {
           lineHeight: 1.2,
         }}
       >
-        Cam 49 will keep your information private. Only your name and ID will be
-        public.
+        Camp 49 will keep your information private. Only your name and ID will
+        be public.
       </div>
     </div>
   );

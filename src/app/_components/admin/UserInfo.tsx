@@ -9,7 +9,7 @@ import EditUserSpecialBadges from "./EditUserSpecialBadges";
 import Image from "next/image";
 
 type Props = {
-  userData: Omit<User, "password">;
+  userData: Omit<User, "password" | "verified">;
   allBadges: {
     specialBadges: SpecialBadge[];
     specialBadgesCount: number;

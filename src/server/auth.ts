@@ -93,14 +93,17 @@ export const authOptions: NextAuthOptions = {
           },
         });
         if (existingUser == null) {
-          return null;
+          throw new Error("No User found with this email");
+        }
+        if (existingUser.verified === false) {
+          throw new Error("User is not verified , please check your email");
         }
         const passwordIsMatched = await comparePasswordToHash({
           plaintextPassword: credentials.password,
           hash: existingUser.password,
         });
         if (passwordIsMatched.isEqual === false) {
-          return null;
+          throw new Error("Password is incorrect");
         }
 
         return {

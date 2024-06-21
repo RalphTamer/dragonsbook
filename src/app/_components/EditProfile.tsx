@@ -14,10 +14,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  userData: Omit<User, "password">;
+  userData: Omit<User, "password" | "verified">;
   userRank: UserRank;
   onCancelButtonClick: VoidFunction;
-  updateUserData: (user: Omit<User, "password">) => void;
+  updateUserData: (user: Omit<User, "password" | "verified">) => void;
 };
 
 const EditProfile = (props: Props) => {

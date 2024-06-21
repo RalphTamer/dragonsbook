@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { z } from "zod";
 import {
   createTRPCRouter,
@@ -8,6 +9,7 @@ import {
   comparePasswordToHash,
   hashPassword,
   sendEmail,
+  sendVerificationEmail,
 } from "~/server/services/auth.service";
 
 // TODO change this
@@ -77,7 +79,7 @@ export const authRouter = createTRPCRouter({
       const hashedPassword = await hashPassword({
         plaintextPassword: input.password,
       });
-      await ctx.db.user.create({
+      const user = await ctx.db.user.create({
         data: {
           email: input.email,
           role: "USER",
@@ -96,6 +98,17 @@ export const authRouter = createTRPCRouter({
           totalPoints: 0,
           title: "New Recruit",
         },
+      });
+      const token = await ctx.db.activateToken.create({
+        data: {
+          userId: user.id,
+          token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ""),
+        },
+      });
+
+      await sendVerificationEmail({
+        recipient_email: user.email,
+        url: `${process.env.BASE_URL}/auth/activate/${token.token}`,
       });
 
       return {
@@ -252,6 +265,121 @@ export const authRouter = createTRPCRouter({
       return {
         success: true,
         message: "Your password has been updated!",
+      };
+    }),
+  verifyUser: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const token = input.token;
+      const user = await ctx.db.user.findFirst({
+        where: {
+          activateTokens: {
+            some: {
+              AND: [
+                {
+                  activatedAt: null,
+                },
+                {
+                  createdAt: {
+                    gt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 24 hours ago
+                  },
+                },
+                {
+                  token,
+                },
+              ],
+            },
+          },
+        },
+      });
+
+      if (!user) {
+        throw new Error("Token is invalid or expired");
+      }
+
+      await ctx.db.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          verified: true,
+        },
+      });
+
+      await ctx.db.activateToken.update({
+        where: {
+          token,
+        },
+        data: {
+          activatedAt: new Date(),
+        },
+      });
+
+      return {
+        success: true,
+      };
+    }),
+  sendVerificationEmail: publicProcedure
+    .input(
+      z.object({
+        email: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findFirst({
+        where: {
+          email: input.email,
+        },
+      });
+      if (user == null) {
+        return {
+          success: false,
+          message: "User not found",
+        };
+      }
+      const emailAlreadySent = await ctx.db.user.findFirst({
+        where: {
+          activateTokens: {
+            some: {
+              AND: [
+                {
+                  activatedAt: null,
+                },
+                {
+                  createdAt: {
+                    gt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 24 hours ago
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+      if (emailAlreadySent != null) {
+        return {
+          success: false,
+          message: "Email is already sent , please check spam emails",
+        };
+      }
+      const token = await ctx.db.activateToken.create({
+        data: {
+          userId: user.id,
+          token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ""),
+        },
+      });
+
+      await sendVerificationEmail({
+        recipient_email: user.email,
+        url: `${process.env.BASE_URL}/auth/activate/${token.token}`,
+      });
+
+      return {
+        success: true,
+        message: "Email sent",
       };
     }),
 });

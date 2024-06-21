@@ -9,9 +9,15 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import SVGIcon from "./UI/SVGIcon";
+import AsyncButton from "./UI/AsyncButton";
+import { api } from "~/trpc/react";
 
 const LoginForm = () => {
-  const [submitErrors, setSubmitErrors] = useState<boolean>(false);
+  const [submitErrors, setSubmitErrors] = useState<string | null>(null);
+  const [message, setMessage] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   return (
     <div className="container ">
@@ -50,7 +56,7 @@ const LoginForm = () => {
             redirect: false,
           }).then(async (data) => {
             if (data?.ok === true) {
-              setSubmitErrors(false);
+              setSubmitErrors(null);
               await signIn("credentials", {
                 email: values.email,
                 password: values.password,
@@ -58,12 +64,14 @@ const LoginForm = () => {
                 callbackUrl: "/dragon-book",
               });
             } else {
-              setSubmitErrors(true);
+              if (data?.error != null) {
+                setSubmitErrors(data?.error);
+              }
             }
           });
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values }) => (
           <Form>
             <div className="flex flex-col space-y-1">
               <CustomInput name="email" type="email" placeholder="Email" />
@@ -72,7 +80,7 @@ const LoginForm = () => {
                 type="password"
                 placeholder="Password"
               />
-              {submitErrors === true && (
+              {submitErrors != null && (
                 <div
                   className="text-center"
                   style={{
@@ -80,7 +88,39 @@ const LoginForm = () => {
                     color: style.color.fireRed,
                   }}
                 >
-                  Email or Password are incorrect
+                  {submitErrors}
+                  {submitErrors.includes("not verified") && (
+                    <>
+                      <AsyncButton
+                        buttonText="Send mail"
+                        style={{
+                          borderRadius: 12,
+                          background: style.color.fireRed,
+                        }}
+                        onClick={async () => {
+                          const res =
+                            await api.auth.sendVerificationEmail.query({
+                              email: values.email,
+                            });
+                          setMessage(res);
+                        }}
+                      />
+                      {message != null && (
+                        <div
+                          style={{
+                            fontWeight: 500,
+                            fontSize: 14,
+                            color:
+                              message.success === true
+                                ? style.color.earthGreen
+                                : style.color.fireRed,
+                          }}
+                        >
+                          {message.message}
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
               )}
             </div>

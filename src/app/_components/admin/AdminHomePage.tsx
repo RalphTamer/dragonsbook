@@ -12,7 +12,7 @@ import AsyncButton from "../UI/AsyncButton";
 import Image from "next/image";
 type Props = {
   users: {
-    allUsers: Omit<User, "password">[];
+    allUsers: Omit<User, "password" | "verified">[];
     usersCount: number;
   };
 };

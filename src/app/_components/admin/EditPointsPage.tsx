@@ -11,7 +11,7 @@ type DragonPoints = {
   earthPoints: number;
 };
 type Props = {
-  userData: Omit<User, "password">;
+  userData: Omit<User, "password" | "verified">;
 };
 const EditPointsPage = (props: Props) => {
   const [dragonPoints, setDragonPoints] = useState<DragonPoints>({

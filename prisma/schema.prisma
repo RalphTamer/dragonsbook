@@ -86,6 +86,7 @@ model User {
     email                    String                     @unique
     role                     Roles
     password                 String
+    verified                 Boolean?                   @default(false)
     image                    String?
     fullname                 String
     dateOfBirth              DateTime
@@ -104,6 +105,7 @@ model User {
     // @@index([totalPoints , id])
     UserAcquiredSpecialBadge UserAcquiredSpecialBadge[]
     createdAt                DateTime                   @default(now())
+    activateTokens           ActivateToken[]
 }
 
 model VerificationToken {
@@ -147,4 +149,14 @@ model Popup {
     content   String
     link      String
     createdAt DateTime @default(now())
+}
+
+model ActivateToken {
+    id          Int       @id @default(autoincrement())
+    token       String    @unique
+    createdAt   DateTime  @default(now())
+    activatedAt DateTime?
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
 }

@@ -6,8 +6,8 @@ import type { User } from "@prisma/client";
 import { api } from "~/trpc/react";
 import SVGIcon from "./UI/SVGIcon";
 type Props = {
-  userData: Omit<User, "password">;
-  updateUserData: (user: Omit<User, "password">) => void;
+  userData: Omit<User, "password" | "verified">;
+  updateUserData: (user: Omit<User, "password" | "verified">) => void;
 };
 const EditProfileForm = (props: Props) => {
   const { userData } = props;

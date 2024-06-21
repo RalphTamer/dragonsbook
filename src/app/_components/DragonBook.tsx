@@ -11,7 +11,7 @@ import EditProfile from "./EditProfile";
 import { formatNumber } from "~/lib/utils";
 import Image from "next/image";
 
-export type DragonBookUser = Omit<User, "password"> & {
+export type DragonBookUser = Omit<User, "password" | "verified"> & {
   UserAcquiredSpecialBadge: ({
     specialBadge: {
       id: string;
@@ -34,7 +34,7 @@ type Props = {
 };
 const DragonBook = (props: Props) => {
   const { userRank } = props;
-  const [userData, setUserData] = useState<Omit<User, "password">>(
+  const [userData, setUserData] = useState<Omit<User, "password" | "verified">>(
     props.userData,
   );
   const [activePage, setactivePage] = useState<"view" | "edit">("view");

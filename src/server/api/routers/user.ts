@@ -268,6 +268,7 @@ export const userRouter = createTRPCRouter({
             username: true,
             waterPoints: true,
             createdAt: true,
+            verified: false,
           },
         });
         return {

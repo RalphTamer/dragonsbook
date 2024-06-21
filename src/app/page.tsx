@@ -4,6 +4,7 @@ import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
   const session = (await getServerAuthSession()) as unknown as NewSession;
+  console.log(session, "sessionnn");
 
   if (session?.user != null) {
     if (session.user.role === "ADMIN") {
