@@ -54,14 +54,21 @@ export default function ImageCropper(props: Props) {
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.[0] != null) {
-      setFileName(e.target.files[0].name);
-      setCrop(undefined); // Makes crop preview update between images.
-      const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        setImgSrc(reader.result?.toString() ?? ""),
-      );
-      if (e.target.files[0] == null) return;
-      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0];
+      const validTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+      if (file && validTypes.includes(file.type)) {
+        setFileName(e.target.files[0].name);
+        setCrop(undefined); // Makes crop preview update between images.
+        const reader = new FileReader();
+        reader.addEventListener("load", () =>
+          setImgSrc(reader.result?.toString() ?? ""),
+        );
+        if (e.target.files[0] == null) return;
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        alert("Please select a valid image file (JPEG, JPG, PNG).");
+      }
     }
   }
 
