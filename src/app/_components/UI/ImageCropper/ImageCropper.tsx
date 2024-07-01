@@ -167,7 +167,7 @@ export default function ImageCropper(props: Props) {
           className="hidden"
           ref={inputFileRef}
           type="file"
-          accept="image/*"
+          accept=".jpeg, .jpg, .png"
           onChange={onSelectFile}
         />
       </div>
