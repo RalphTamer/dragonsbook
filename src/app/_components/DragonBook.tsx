@@ -10,6 +10,7 @@ import { useState } from "react";
 import EditProfile from "./EditProfile";
 import { formatNumber } from "~/lib/utils";
 import Image from "next/image";
+import { getRankTitle } from "../_services/profile.service";
 
 export type DragonBookUser = Omit<User, "password" | "verified"> & {
   UserAcquiredSpecialBadge: ({
@@ -118,7 +119,7 @@ const DragonBook = (props: Props) => {
                   <div>Name:</div>
                 </div>
                 <div>
-                  <div>{userData.title}</div>
+                  <div>{getRankTitle(userData.totalPoints)}</div>
                   <div>{formatNumber(userData.totalPoints) ?? 0}</div>
                   <div>{userData.fullname}</div>
                 </div>
