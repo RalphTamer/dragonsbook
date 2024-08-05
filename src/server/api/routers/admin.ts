@@ -521,7 +521,7 @@ export const adminRouter = createTRPCRouter({
     }
 
     if (
-      findUser.email === "candylabsinc@gmail.com" ||
+      findUser.email === "thisiscamp49@gmail.com" ||
       findUser.email === "ralf.tamer@gmail.com"
     ) {
       await ctx.db.user.update({
