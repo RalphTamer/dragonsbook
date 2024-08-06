@@ -201,8 +201,8 @@ export default function ImageCropper(props: Props) {
               sizes="100vw"
               priority
               style={{
-                width: "100%",
-                height: "100%",
+                width: "fit-content",
+                height: "fit-content",
                 //
                 transform: `scale(${scale}) rotate(${rotate}deg)`,
               }}
