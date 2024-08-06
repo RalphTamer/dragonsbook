@@ -82,13 +82,14 @@ export default function ImageCropper(props: Props) {
   async function onButtonClick() {
     props.loading(true);
 
+    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
     const image = imgRef.current as HTMLImageElement;
+    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
     const previewCanvas = previewCanvasRef.current as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error("Crop canvas does not exist");
     }
-    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
 
     // This will size relative to the uploaded image
     // size. If you want to size according to what they
