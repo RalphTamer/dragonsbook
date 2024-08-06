@@ -81,8 +81,9 @@ export default function ImageCropper(props: Props) {
 
   async function onButtonClick() {
     props.loading(true);
-    const image = imgRef.current;
-    const previewCanvas = previewCanvasRef.current;
+
+    const image = imgRef.current as HTMLImageElement;
+    const previewCanvas = previewCanvasRef.current as HTMLCanvasElement;
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error("Crop canvas does not exist");
     }
@@ -93,11 +94,12 @@ export default function ImageCropper(props: Props) {
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
 
-    const offscreen = new OffscreenCanvas(
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY,
-    );
-    const ctx = offscreen.getContext("2d");
+    // Create a traditional canvas element
+    const canvas = document.createElement("canvas");
+    canvas.width = completedCrop.width * scaleX;
+    canvas.height = completedCrop.height * scaleY;
+    const ctx = canvas.getContext("2d");
+
     if (!ctx) {
       throw new Error("No 2d context");
     }
@@ -110,21 +112,28 @@ export default function ImageCropper(props: Props) {
       previewCanvas.height,
       0,
       0,
-      offscreen.width,
-      offscreen.height,
+      canvas.width,
+      canvas.height,
     );
-    // You might want { type: "image/jpeg", quality: <0 to 1> } to
-    // reduce image size
-    const blob = await offscreen.convertToBlob({
-      type: "image/jpeg",
-    });
-    const date = new Date();
-    const randomFileName = `file-name-${date.getDate()}-${date.getDate()}-${date.getHours()}--${date.getMilliseconds()}-${Math.ceil(date.getMilliseconds() * (Math.random() * 100000000000))}.jpg`;
-    const file = new File([blob], randomFileName, {
-      type: blob.type,
-    });
-    await props.onButtonClick(file);
-    props.loading(false);
+
+    // Convert traditional canvas to blob
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        handleFile(blob);
+      } else {
+        throw new Error("Canvas to blob conversion failed");
+      }
+    }, "image/jpeg");
+
+    async function handleFile(blob: Blob) {
+      const date = new Date();
+      const randomFileName = `file-name-${date.getDate()}-${date.getMonth() + 1}-${date.getHours()}--${date.getMilliseconds()}-${Math.ceil(date.getMilliseconds() * (Math.random() * 100000000000))}.jpg`;
+      const file = new File([blob], randomFileName, {
+        type: blob.type,
+      });
+      await props.onButtonClick(file);
+      props.loading(false);
+    }
   }
 
   // Use regular useEffect
