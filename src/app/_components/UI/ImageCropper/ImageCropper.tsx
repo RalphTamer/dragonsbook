@@ -84,7 +84,7 @@ export default function ImageCropper(props: Props) {
 
     const image = imgRef.current as HTMLImageElement;
     const previewCanvas = previewCanvasRef.current as HTMLCanvasElement;
-    if (image == null || previewCanvas == null || completedCrop == null) {
+    if (!image || !previewCanvas || !completedCrop) {
       throw new Error("Crop canvas does not exist");
     }
 
@@ -119,7 +119,7 @@ export default function ImageCropper(props: Props) {
     // Convert traditional canvas to blob
     canvas.toBlob(async (blob) => {
       if (blob) {
-        await handleFile(blob);
+        void handleFile(blob);
       } else {
         throw new Error("Canvas to blob conversion failed");
       }
