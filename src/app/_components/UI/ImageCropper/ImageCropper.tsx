@@ -182,7 +182,8 @@ export default function ImageCropper(props: Props) {
         <div className="flex justify-center">
           <ReactCrop
             style={{
-              maxHeight: "50vh",
+              maxHeight: "100%",
+              width: "50vw",
             }}
             crop={crop}
             onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -201,9 +202,8 @@ export default function ImageCropper(props: Props) {
               sizes="100vw"
               priority
               style={{
-                width: "fit-content",
-                height: "fit-content",
-                //
+                height: "100%",
+                width: "100%",
                 transform: `scale(${scale}) rotate(${rotate}deg)`,
               }}
               onLoad={onImageLoad}

@@ -61,7 +61,7 @@ const BottomSlideModal: React.FC<ModalProps> = ({
           right: 0,
           height: height ?? "fit-content",
           width: "100vw",
-          maxWidth: 500,
+          maxWidth: "100%",
           overflowY: "auto",
           boxShadow: "1px 1px 15px rgba(0,0,0,0.2)",
           backgroundColor: "#fff",
