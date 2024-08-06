@@ -62,13 +62,24 @@ export const userRouter = createTRPCRouter({
           waterPoints: true,
           UserAttendance: true,
         },
+        where: {
+          role: {
+            equals: "USER",
+          },
+        },
         orderBy,
         take,
         skip: input.skip,
       });
 
       // await new Promise((resolve) => setTimeout(resolve, 5000));
-      const usersCount = await ctx.db.user.count();
+      const usersCount = await ctx.db.user.count({
+        where: {
+          role: {
+            equals: "USER",
+          },
+        },
+      });
       return {
         allUsers,
         allUsersCount: usersCount,

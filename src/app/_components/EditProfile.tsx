@@ -12,6 +12,7 @@ import BottomSlideModal from "./UI/BottomSlideModal";
 import ImageCropper from "./UI/ImageCropper/ImageCropper";
 import Image from "next/image";
 import Link from "next/link";
+import { getRankTitle } from "../_services/profile.service";
 
 type Props = {
   userData: Omit<User, "password" | "verified">;
@@ -39,7 +40,9 @@ const EditProfile = (props: Props) => {
       >
         <div className="flex w-[70%] flex-col justify-between">
           <div style={{ lineHeight: 1.2 }}>
-            <div className="text-[18px] font-bold">{userData.title}</div>
+            <div className="text-[18px] font-bold">
+              {getRankTitle(userData.totalPoints)}
+            </div>
             <div
               style={{
                 color: style.color.fireRed,

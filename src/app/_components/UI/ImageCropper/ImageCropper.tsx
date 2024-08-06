@@ -183,7 +183,12 @@ export default function ImageCropper(props: Props) {
             inputFileRef.current.click();
           }}
         >
-          {fileName ?? "Select Image"}
+          {fileName != null
+            ? fileName?.substring(0, 7) +
+              "... " +
+              "." +
+              fileName?.split(".").reverse()[0]
+            : "Select Image"}
         </div>
         <input
           className="hidden"

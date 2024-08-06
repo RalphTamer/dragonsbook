@@ -16,9 +16,6 @@ const GenerateEventsTab = () => {
   } | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // TODO check whhy three renders
-  //   console.log("render");
-  // TODO CLEANUP
 
   return (
     <div className="container">

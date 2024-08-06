@@ -39,12 +39,12 @@ export function getRankTitle(points: number): string {
   if (points <= 4) {
     return "New Recruit";
   } else if (points <= 19) {
-    return "Rookie";
-  } else if (points <= 34) {
-    return "Challenger";
-  } else if (points <= 50) {
+    return "Scout";
+  } else if (points <= 49) {
     return "Explorer";
+  } else if (points <= 99) {
+    return "Navigator";
   } else {
-    return "Athlete";
+    return "Veteran";
   }
 }

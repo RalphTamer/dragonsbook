@@ -18,7 +18,7 @@ const SpecialBadge = (props: Props) => {
         borderBottom: "1px solid #afafaf",
       }}
     >
-      <div className="w-[25%]">
+      <div className="w-[20%]">
         <Image
           src={image}
           alt="image"
@@ -35,25 +35,23 @@ const SpecialBadge = (props: Props) => {
           }}
         />
       </div>
-      <div className="flex w-[66%] flex-col justify-between">
-        <div>
-          <div
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-            }}
-          >
-            {title}
-          </div>
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: "bold",
-              color: style.color.fireRed,
-            }}
-          >
-            {year}
-          </div>
+      <div className="flex w-[66%] flex-col justify-between py-4">
+        <div
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+          }}
+        >
+          {title}
+        </div>
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: "bold",
+            color: style.color.fireRed,
+          }}
+        >
+          {year}
         </div>
         <div
           style={{

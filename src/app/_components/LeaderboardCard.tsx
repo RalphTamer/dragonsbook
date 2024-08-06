@@ -74,7 +74,6 @@ const LeaderboardCard = (props: Props) => {
                 transform: "translate(-50%,-50%)",
               }}
             >
-              {/* TODO handle if more than 1000 make 1k */}
               <div style={{ fontWeight: "bold", fontSize: 16 }}>
                 {formatNumber(props.totalPoints)}
               </div>

@@ -12,7 +12,6 @@ import {
   sendVerificationEmail,
 } from "~/server/services/auth.service";
 
-// TODO change this
 export const authRouter = createTRPCRouter({
   userSignup: publicProcedure
     .input(
