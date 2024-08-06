@@ -84,7 +84,7 @@ export default function ImageCropper(props: Props) {
 
     const image = imgRef.current as HTMLImageElement;
     const previewCanvas = previewCanvasRef.current as HTMLCanvasElement;
-    if (!image || !previewCanvas || !completedCrop) {
+    if (image == null || previewCanvas == null || completedCrop == null) {
       throw new Error("Crop canvas does not exist");
     }
 
@@ -100,7 +100,7 @@ export default function ImageCropper(props: Props) {
     canvas.height = completedCrop.height * scaleY;
     const ctx = canvas.getContext("2d");
 
-    if (!ctx) {
+    if (ctx == null) {
       throw new Error("No 2d context");
     }
 
@@ -119,7 +119,7 @@ export default function ImageCropper(props: Props) {
     // Convert traditional canvas to blob
     canvas.toBlob(async (blob) => {
       if (blob) {
-        handleFile(blob);
+        await handleFile(blob);
       } else {
         throw new Error("Canvas to blob conversion failed");
       }
