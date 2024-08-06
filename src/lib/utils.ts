@@ -22,6 +22,8 @@ export function humanizePaths(path: string) {
     return "POINTS CLAIMED";
   } else if (path.startsWith("/change-password")) {
     return "CHANGE PASSWORD";
+  } else if (path.startsWith("/auth")) {
+    return "RESET PASSWORD";
   } else {
     return "ERROR";
   }

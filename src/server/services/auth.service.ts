@@ -58,7 +58,7 @@ export function sendEmail(args: { recipient_email: string; url: string }) {
         <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">DRAGONBOOK</a>
       </div>
       <p style="font-size:1.1em">Hi,</p>
-      <p>Thank you for choosing DRAGONBOOK. Please click on the button below to complete your password recovery process , link in valid for 5 minutes</p>
+      <p>Thank you for choosing DRAGONBOOK. Please click on the button below to complete your password recovery process , link is valid for 5 minutes</p>
       <a href="${args.url}" style="background: #00466a;margin: 0 auto;width: max-content;padding: 10px 10px;color: #fff;border-radius: 4px;">RESET PASSWORD</a>
       <a href="${args.url}" >${args.url}</a>
       <p style="font-size:0.9em;">Regards,<br />DRAGONBOOK</p>
