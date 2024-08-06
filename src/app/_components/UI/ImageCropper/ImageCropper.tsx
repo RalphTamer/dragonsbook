@@ -85,7 +85,6 @@ export default function ImageCropper(props: Props) {
     const image = imgRef.current as HTMLImageElement;
     const previewCanvas = previewCanvasRef.current as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error("Crop canvas does not exist");
     }
