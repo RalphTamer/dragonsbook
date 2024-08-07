@@ -55,7 +55,7 @@ export default function ImageCropper(props: Props) {
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.[0] != null) {
       const file = e.target.files[0];
-      const validTypes = ["image/jpeg", "image/jpg", "image/png"];
+      const validTypes = ["image/jpeg", "image/jpg"];
 
       if (file && validTypes.includes(file.type)) {
         setFileName(e.target.files[0].name);
@@ -67,7 +67,7 @@ export default function ImageCropper(props: Props) {
         if (e.target.files[0] == null) return;
         reader.readAsDataURL(e.target.files[0]);
       } else {
-        alert("Please select a valid image file (JPEG, JPG, PNG).");
+        alert("Please select a valid image file (JPEG, JPG).");
       }
     }
   }

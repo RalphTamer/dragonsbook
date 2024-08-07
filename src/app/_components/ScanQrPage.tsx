@@ -160,7 +160,7 @@ const ScanQrPage = () => {
         </div>
       </div>
       <BottomSlideModal
-        height="90vh"
+        height="85vh"
         isOpen={modalIsVisible}
         onClose={() => {
           setModalIsVisible(false);

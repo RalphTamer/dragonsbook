@@ -139,7 +139,7 @@ const EditProfile = (props: Props) => {
         onClose={() => {
           setModalOpen(false);
         }}
-        height="90vh"
+        height="85vh"
       >
         <div className="container my-2">
           <ImageCropper

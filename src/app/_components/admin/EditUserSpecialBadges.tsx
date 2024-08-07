@@ -148,7 +148,7 @@ const EditUserSpecialBadges = (props: Props) => {
         </div>
       )}
       <BottomSlideModal
-        height="90vh"
+        height="85vh"
         isOpen={modalIsVisible}
         onClose={() => {
           setModalIsVisible(false);
