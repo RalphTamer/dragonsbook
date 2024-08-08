@@ -50,6 +50,7 @@ const SignupForm = () => {
           if (res.success === true) {
             actions.resetForm();
             router.push("/auth/login");
+            alert("Please check your email to verify your account");
           }
         }}
       >

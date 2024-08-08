@@ -13,12 +13,12 @@ const SpecialBadge = (props: Props) => {
   const { image, title, content, year } = props.badge;
   return (
     <div
-      className="flex gap-4 py-4"
+      className="flex items-center gap-4  py-4"
       style={{
         borderBottom: "1px solid #afafaf",
       }}
     >
-      <div className="w-[20%]">
+      <div className="h-full w-[25%]">
         <Image
           src={image}
           alt="image"
@@ -31,11 +31,11 @@ const SpecialBadge = (props: Props) => {
             height: "100%",
             //
             aspectRatio: 1,
-            borderRadius: "50%",
+            borderRadius: "100%",
           }}
         />
       </div>
-      <div className="flex w-[66%] flex-col justify-between py-4">
+      <div className="flex w-[75%] flex-col justify-between py-4">
         <div
           style={{
             fontSize: 16,

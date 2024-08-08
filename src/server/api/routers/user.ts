@@ -99,6 +99,9 @@ export const userRouter = createTRPCRouter({
         orderBy: {
           totalPoints: "desc",
         },
+        where: {
+          role: "USER",
+        },
       });
       const allUsersByFire = await ctx.db.user.findMany({
         select: {
@@ -106,6 +109,9 @@ export const userRouter = createTRPCRouter({
         },
         orderBy: {
           firePoints: "desc",
+        },
+        where: {
+          role: "USER",
         },
       });
       const allUsersByEarth = await ctx.db.user.findMany({
@@ -115,6 +121,9 @@ export const userRouter = createTRPCRouter({
         orderBy: {
           earthPoints: "desc",
         },
+        where: {
+          role: "USER",
+        },
       });
       const allUsersBywind = await ctx.db.user.findMany({
         select: {
@@ -123,6 +132,9 @@ export const userRouter = createTRPCRouter({
         orderBy: {
           windPoints: "desc",
         },
+        where: {
+          role: "USER",
+        },
       });
       const allUsersByWater = await ctx.db.user.findMany({
         select: {
@@ -130,6 +142,9 @@ export const userRouter = createTRPCRouter({
         },
         orderBy: {
           waterPoints: "desc",
+        },
+        where: {
+          role: "USER",
         },
       });
 
