@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatNumber } from "~/lib/utils";
+import { getRankTitle } from "../_services/profile.service";
 
 type Props = {
   username: string;
@@ -51,7 +52,7 @@ const LeaderboardCard = (props: Props) => {
                 Rank #{props.rank}
               </div>
             </div>
-            <div>Events Completed: {props.attendedEvents}</div>
+            <div>Title: {getRankTitle(props.totalPoints)}</div>
           </div>
         </div>
         <div
